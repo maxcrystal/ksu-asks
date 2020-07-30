@@ -7,23 +7,26 @@ import { AnswerPage } from "./AnswerPage";
 import { Questions } from "../api/questions";
 import { Games } from "../api/games";
 import { Answers } from "../api/answers";
+import { Couples } from "../api/couples";
 
 const MainPage = () => {
-  const { questions, game, answers, isReady } = useTracker(() => {
+  const { questions, game, answers, couples, isReady } = useTracker(() => {
     const subcriptions = [
       Meteor.subscribe("questions"),
       Meteor.subscribe("answers"), // TODO replace with proper logic using game id
       Meteor.subscribe("games"), // TODO replace with proper logic using game id
+      Meteor.subscribe("couples"), // TODO replace with proper logic using game id
     ];
 
     const questions = Questions.find().fetch();
     const game = Games.findOne();
     const answers = Answers.find().fetch();
+    const couples = Couples.find().fetch();
 
     const isReady = subcriptions.every(subscription => subscription.ready());
 
-    return { questions, game, answers, isReady };
-  }, []);
+    return { questions, game, answers, couples, isReady };
+  });
 
   const newQuestionClickHandler = () => {
     const randomQuestionNumber = Math.floor(Math.random() * questions.length);
@@ -58,6 +61,7 @@ const MainPage = () => {
             question => question._id === game.activeQuestionId
           )}
           game={game}
+          couples={couples}
           answer={answers.find(
             answer =>
               answer.gameId === game._id &&
