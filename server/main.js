@@ -3,6 +3,7 @@ import { Meteor } from "meteor/meteor";
 import { Questions } from "../imports/api/questions";
 import { Games } from "../imports/api/games";
 import { Couples } from "../imports/api/couples";
+import { Answers } from "../imports/api/answers";
 import { Timer } from "../imports/api/timer";
 
 import "../imports/api/questions";
@@ -32,14 +33,17 @@ Meteor.startup(() => {
     Meteor.call("couples.insert", {
       he: "Макс",
       she: "Ксю",
+      gameId: "FfKA4D8iXXmr9LYXP",
     });
     Meteor.call("couples.insert", {
       he: "Лелик",
       she: "Марианна",
+      gameId: "FfKA4D8iXXmr9LYXP",
     });
     Meteor.call("couples.insert", {
       he: "Вовчик",
       she: "Оля",
+      gameId: "FfKA4D8iXXmr9LYXP",
     });
   }
 
