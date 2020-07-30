@@ -9,12 +9,18 @@ const Couples = new Mongo.Collection("couples");
  * names: object {he: string, she: string},
  * slug: sanitized name to use as parto of the links adddress
  * avatar: image
- * points: number,
+ * gameId: game id
  * createdAT
  */
 
+if (Meteor.isServer) {
+  Meteor.publish("couples", () => {
+    return Couples.find(); // TODO return only cpoules for the current gameId
+  });
+}
+
 Meteor.methods({
-  "couples.insert"({ he, she }) {
+  "couples.insert"({ he, she, gameId }) {
     // TODO: validate
 
     const names = { he, she };
@@ -23,7 +29,7 @@ Meteor.methods({
     Couples.insert({
       names,
       slug,
-      pints: 0,
+      gameId,
       createdAt: Date.now(),
     });
   },
