@@ -3,25 +3,27 @@ import PropTypes from "prop-types";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 
-import { Timer as TimerCollection } from "../api/timer";
+import { Timer as TimerCollection, timerReasons } from "../api/timer";
 
-const Timer = ({ maxTime, onTimeEllapsed }) => {
+const Timer = ({ onTimeEllapsed }) => {
   const [ellapsedTime, setEllapsedTime] = useState(0);
 
-  const { isActive, startDate } = useTracker(() => {
+  const { isActive, startDate, maxTime, reason } = useTracker(() => {
     const subscription = Meteor.subscribe("timer");
     const isReady = subscription.ready();
 
     const timer = TimerCollection.findOne();
     const isActive = isReady ? timer.isActive : false;
     const startDate = isReady ? timer.startDate : null;
-    return { isActive, startDate };
+    const maxTime = isReady ? timer.maxTime : null;
+    const reason = isReady ? timer.reason : "";
+    return { isActive, startDate, maxTime, reason };
   }, []);
 
   useEffect(() => {
     if (isActive) {
       if (ellapsedTime >= maxTime) {
-        onTimeEllapsed();
+        onTimeEllapsed(reason);
       }
 
       const update = setTimeout(() => {
@@ -33,6 +35,8 @@ const Timer = ({ maxTime, onTimeEllapsed }) => {
         // console.log("interval cleared");
         clearTimeout(update);
       };
+    } else {
+      setEllapsedTime(0);
     }
   }, [isActive, ellapsedTime]);
 
@@ -48,11 +52,12 @@ const Timer = ({ maxTime, onTimeEllapsed }) => {
 };
 
 Timer.defaultProps = {
-  maxTime: 10000,
+  onTimeEllapsed: () => {
+    console.log("Time is ellapsed!");
+  },
 };
 
 Timer.protoTypes = {
-  maxTime: PropTypes.number.isRequired,
   onTimeEllapsed: PropTypes.func.isRequired,
 };
 

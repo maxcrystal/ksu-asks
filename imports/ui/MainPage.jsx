@@ -8,6 +8,7 @@ import { Questions } from "../api/questions";
 import { Games } from "../api/games";
 import { Answers } from "../api/answers";
 import { Couples } from "../api/couples";
+import { timerReasons } from "../api/timer";
 
 const MainPage = () => {
   const { questions, game, answers, couples, isReady } = useTracker(() => {
@@ -44,7 +45,12 @@ const MainPage = () => {
       activeQuestionId: randomQuestion._id,
     });
 
-    Meteor.call("timer.update", { startDate: Date.now(), isActive: true });
+    Meteor.call("timer.update", {
+      startDate: Date.now(),
+      isActive: true,
+      maxTime: 10000,
+      reason: timerReasons.answering,
+    });
 
     console.log("activeQuestionId", randomQuestion._id, game.activeQuestionId);
   };

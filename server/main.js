@@ -58,4 +58,9 @@ Meteor.startup(() => {
     console.log("Timer is set");
     Timer.insert({ startDate: 0, isActive: false });
   }
+
+  // if (Answers.find().count() == 0) {
+  //   console.log("Answers is set");
+  //   Answers.insert({ votedCouple: [] });
+  // }
 });

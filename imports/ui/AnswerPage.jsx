@@ -3,6 +3,7 @@ import { Meteor } from "meteor/meteor";
 
 import { VotingPage } from "./VotingPage";
 import { Timer } from "./Timer";
+import { timerReasons } from "../api/timer";
 
 const AnswerPage = ({ question, game, answer, couples }) => {
   [text, setText] = useState(answer ? answer.text : "");
@@ -12,10 +13,9 @@ const AnswerPage = ({ question, game, answer, couples }) => {
   }, []);
 
   useEffect(() => {
-    const isVoteFinished = answer.votedCouples.length === couples.length - 1;
+    const isVoteFinished = answer.votedCouples.length === couples.length - 2; // FIXME chnge to -1 (-2 for debug only)
     if (isVoteFinished) {
-      Meteor.call("games.resetActiveQuestion", game._id);
-      console.log("reset active question for game", game);
+      resetActiveQuestion();
     }
   }, [answer.votedCouples.length]);
 
@@ -30,19 +30,39 @@ const AnswerPage = ({ question, game, answer, couples }) => {
 
   const handleSubmitAnswer = e => {
     e.preventDefault();
-    Meteor.call("timer.stop");
-    Meteor.call("answers.setAnswered", { _id: answer._id });
     startVoting();
   };
 
-  const onTimeEllapsed = () => {
-    Meteor.call("timer.stop");
-    Meteor.call("answers.setAnswered", { _id: answer._id });
-    console.log("time ellapsed");
-    startVoting();
+  const onTimeEllapsed = reason => {
+    console.log("REASON", reason);
+    switch (reason) {
+      case timerReasons.answering:
+        console.log(timerReasons.answering);
+        startVoting();
+        return;
+      case timerReasons.voting:
+        console.log(timerReasons.voting);
+        resetActiveQuestion();
+        return;
+    }
   };
 
-  const startVoting = () => {};
+  const startVoting = () => {
+    Meteor.call("timer.stop", timerReasons.answeringTimeOut);
+    Meteor.call("answers.setAnswered", { _id: answer._id });
+
+    Meteor.call("timer.update", {
+      startDate: Date.now(),
+      isActive: true,
+      maxTime: 15000,
+      reason: timerReasons.voting,
+    });
+  };
+
+  const resetActiveQuestion = () => {
+    Meteor.call("games.resetActiveQuestion", game._id);
+    console.log("reset active question for game", game);
+  };
 
   return (
     <div>
