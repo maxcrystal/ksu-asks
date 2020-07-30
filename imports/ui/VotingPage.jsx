@@ -10,7 +10,6 @@ const VotingPage = ({ answer, couples }) => {
   const isVoted = useTracker(() => {
     const isVoted = answer.votedCouples.includes(coupleId); //FIXME proper use of couple ID through session var
     console.log("isVoted", isVoted, answer.votedCouples);
-    const isVoteFinished = answer.votedCouples.length === couples.length; // TODO: move logic to AnswerPage
     return isVoted;
   }, [answer.votedCouples.length]);
 
