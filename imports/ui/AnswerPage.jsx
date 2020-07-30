@@ -4,12 +4,20 @@ import { Meteor } from "meteor/meteor";
 import { VotingPage } from "./VotingPage";
 import { Timer } from "./Timer";
 
-const AnswerPage = ({ question, game, answer }) => {
+const AnswerPage = ({ question, game, answer, couples }) => {
   [text, setText] = useState(answer ? answer.text : "");
 
   useEffect(() => {
     document.getElementById("answer-text").focus();
   }, []);
+
+  useEffect(() => {
+    const isVoteFinished = answer.votedCouples.length === couples.length - 1;
+    if (isVoteFinished) {
+      Meteor.call("games.resetActiveQuestion", game._id);
+      console.log("reset active question for game", game);
+    }
+  }, [answer.votedCouples.length]);
 
   const handleTypingAnswer = e => {
     if (!answer) {
@@ -25,9 +33,6 @@ const AnswerPage = ({ question, game, answer }) => {
     Meteor.call("timer.stop");
     Meteor.call("answers.setAnswered", { _id: answer._id });
     startVoting();
-
-    Meteor.call("games.resetActiveQuestion", game._id);
-    console.log("reset active question for game", game);
   };
 
   const onTimeEllapsed = () => {
