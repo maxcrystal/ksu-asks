@@ -22,7 +22,7 @@ Meteor.methods({
   "games.insert"({ name }) {
     Games.insert({
       name,
-      slug: slugify(name),
+      slug: slugify(name, { replace: { ".": "-" } }),
       isActive: true,
       activeQuestionId: "",
       admin: "test admin id", // TODO add admin parameter

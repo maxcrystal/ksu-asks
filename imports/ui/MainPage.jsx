@@ -3,6 +3,7 @@ import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 
 import { AnswerPage } from "./AnswerPage";
+import { AdminPage } from "./admin/AdminPage";
 
 import { Questions } from "../api/questions";
 import { Games } from "../api/games";
@@ -99,6 +100,7 @@ const MainPage = () => {
           New question - <i>Visible only to one couple</i>
         </button>
       )}
+      <AdminPage />
     </div>
   );
 };
