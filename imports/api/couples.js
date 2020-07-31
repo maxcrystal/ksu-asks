@@ -8,7 +8,6 @@ const Couples = new Mongo.Collection("couples");
  * _id,
  * names: object {he: string, she: string},
  * slug: sanitized name to use as parto of the links adddress
- * avatar: image
  * gameId: game id
  * createdAT
  */

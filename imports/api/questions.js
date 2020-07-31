@@ -6,7 +6,6 @@ const Questions = new Mongo.Collection("questions");
 /**
  * _id
  * text: string
- * isActive: bool
  */
 
 if (Meteor.isServer) {

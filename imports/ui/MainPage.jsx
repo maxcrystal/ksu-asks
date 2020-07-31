@@ -30,8 +30,27 @@ const MainPage = () => {
   });
 
   const newQuestionClickHandler = () => {
-    const randomQuestionNumber = Math.floor(Math.random() * questions.length);
-    const randomQuestion = questions[randomQuestionNumber];
+    const answeredQuestionsIds = answers.map(answer => answer.questionId);
+    if (answeredQuestionsIds.length === questions.length) {
+      console.log("ALL QUESTIONS ANSWERED"); // TODO create a proper logic to handle this
+      return;
+    }
+    const unansweredQuestions = questions.filter(question => {
+      if (answeredQuestionsIds.length === 0) {
+        return true;
+      } else {
+        return !answeredQuestionsIds.includes(question._id);
+      }
+    });
+    const randomQuestionNumber = Math.floor(
+      Math.random() * unansweredQuestions.length
+    );
+    const randomQuestion = unansweredQuestions[randomQuestionNumber];
+    console.log(
+      "answered, unanswered:",
+      answeredQuestionsIds.length,
+      unansweredQuestions.length
+    );
 
     Meteor.call("answers.insert", {
       text: "",
