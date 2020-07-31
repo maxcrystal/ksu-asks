@@ -1,4 +1,4 @@
-TODO packeages:
+TODO packages:
 
 https://lodash.com/docs/4.17.15#reduce - lodash
 https://github.com/sudodoki/copy-to-clipboard#readme - copy to clipboard

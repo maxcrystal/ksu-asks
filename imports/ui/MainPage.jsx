@@ -47,9 +47,10 @@ const MainPage = () => {
     );
     const randomQuestion = unansweredQuestions[randomQuestionNumber];
     console.log(
-      "answered, unanswered:",
+      "answered, unanswered, random question id:",
       answeredQuestionsIds.length,
-      unansweredQuestions.length
+      unansweredQuestions.length,
+      randomQuestion._id
     );
 
     Meteor.call("answers.insert", {
