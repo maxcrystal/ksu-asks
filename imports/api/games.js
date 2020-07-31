@@ -26,6 +26,7 @@ Meteor.methods({
       isActive: true,
       activeQuestionId: "",
       admin: "test admin id", // TODO add admin parameter
+      createdAt: Date.now(),
     });
   },
   "games.setActiveQuestion"({ _id, activeQuestionId }) {
