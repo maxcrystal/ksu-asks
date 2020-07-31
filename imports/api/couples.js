@@ -23,7 +23,7 @@ Meteor.methods({
     // TODO: validate
 
     const names = { he, she };
-    const slug = slugify(`${he}-${she}`); // TODO check for uniqness
+    const slug = slugify(`${he}-${she}`, { replace: { ".": "-" } }); // TODO check for uniqness
 
     Couples.insert({
       names,
