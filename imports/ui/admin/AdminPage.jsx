@@ -4,6 +4,7 @@ import { Meteor } from "meteor/meteor";
 import { AddGame } from "./AddGame";
 import { AddCouple } from "./AddCouple";
 import { CoupleList } from "./CoupleList";
+import { ShareLinks } from "./ShareLinks";
 
 const AdminPage = () => {
   return (
@@ -15,6 +16,8 @@ const AdminPage = () => {
       <hr />
       <AddGame />
       <button>New Game</button>
+      <hr />
+      <ShareLinks />
     </div>
   );
 };
