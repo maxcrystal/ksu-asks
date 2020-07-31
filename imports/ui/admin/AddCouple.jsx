@@ -17,7 +17,6 @@ const handleAddCoupleClick = e => {
 const AddCouple = () => {
   return (
     <div>
-      <p>AddCouple Content Here</p>
       <form>
         He: <input type="text" id="his-name" />
         She: <input type="text" id="her-name" />

@@ -32,6 +32,11 @@ Meteor.methods({
       createdAt: Date.now(),
     });
   },
+  "couples.remove"({ _id }) {
+    // TODO validate
+
+    Couples.remove({ _id });
+  },
 });
 
 export { Couples };
