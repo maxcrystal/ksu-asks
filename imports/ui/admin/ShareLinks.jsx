@@ -8,6 +8,11 @@ import { Games } from "../../api/games";
 
 const handleShareLinks = ({ couples, game }) => {
   console.log(couples, game);
+  if (game._id === "new-game") {
+    console.log("ADD PROMPT TO START NEW GAME HERE"); // TODO add prompt
+    return;
+  }
+
   const shareLinks = couples.map(
     couple =>
       `${couple.names.he} & ${couple.names.she}: ` +
