@@ -21,7 +21,7 @@ const handleShareLinks = ({ couples, game }) => {
 
 const ShareLinks = () => {
   const { couples, game } = useTracker(() => {
-    const game = Games.findOne({ isActive: true });
+    const game = Games.findOne({ isActive: true }) || { _id: "new-game" };
     const couples = Couples.find({ gameId: game._id }).fetch();
     return { couples, game };
   });
