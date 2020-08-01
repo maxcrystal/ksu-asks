@@ -16,7 +16,7 @@ if (Meteor.isServer) {
 
 Meteor.methods({
   "questions.insert"({ text }) {
-    Questions.insert({
+    return Questions.insert({
       text,
       createdAt: new Date().valueOf(),
     });

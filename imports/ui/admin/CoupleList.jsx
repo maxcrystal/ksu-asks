@@ -21,7 +21,7 @@ const Couple = ({ couple }) => {
 
 const CoupleList = () => {
   const couples = useTracker(() => {
-    return Couples.find().fetch();
+    return Couples.find({ gameId: "new-game" }).fetch();
   });
 
   return (

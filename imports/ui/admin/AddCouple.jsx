@@ -8,7 +8,7 @@ const handleAddCoupleClick = e => {
   Meteor.call("couples.insert", {
     he: hisNameInput.value.trim(),
     she: herNameInput.value.trim(),
-    gameId: "t2Y8hn5qRCEgafGYs", // FIXME replace with proper logic to select active game
+    gameId: "new-game",
   });
   hisNameInput.value = "";
   herNameInput.value = "";
