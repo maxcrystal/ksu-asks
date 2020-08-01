@@ -4,6 +4,7 @@ import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 
 import { Couples } from "../../api/couples";
+import { Games } from "../../api/games";
 
 const handleShareLinks = couples => {
   const shareLinks = couples.map(
@@ -19,8 +20,10 @@ const handleShareLinks = couples => {
 };
 
 const ShareLinks = () => {
-  const couples = useTracker(() => {
-    return Couples.find().fetch(); // TODO fetch only couples for the particular game id
+  const { couples, game } = useTracker(() => {
+    const game = Games.find({ isActive: true }).fetch();
+    const couples = Couples.find({ gameId: game._id }).fetch(); // TODO fetch only couples for the particular game id
+    return { couples, game };
   });
 
   return (
