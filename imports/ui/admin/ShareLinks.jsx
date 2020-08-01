@@ -13,7 +13,7 @@ const handleShareLinks = couples => {
       `${Meteor.absoluteUrl()}testovaya-igra/${couple.slug}/`
   );
   copy(shareLinks.sort().join("\n"), {
-    debug: true,
+    debug: false,
     message: "Press #{key} to copy",
   });
 };
