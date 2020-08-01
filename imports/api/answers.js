@@ -11,7 +11,7 @@ if (Meteor.isServer) {
 
 Meteor.methods({
   "answers.insert"({ text, questionId, coupleId, gameId }) {
-    Answers.insert({
+    return Answers.insert({
       text,
       questionId,
       coupleId,
@@ -24,15 +24,15 @@ Meteor.methods({
     });
   },
   "answers.update"({ _id, text }) {
-    Answers.update(_id, { $set: { text, updatedAt: Date.now() } });
+    return Answers.update(_id, { $set: { text, updatedAt: Date.now() } });
     console.log(`set answer ${_id} updated with ${text}`);
   },
   "answers.setAnswered"({ _id }) {
-    Answers.update(_id, { $set: { isAnswered: true } });
+    return Answers.update(_id, { $set: { isAnswered: true } });
     console.log(`set answer ${_id} answered is true`);
   },
   "answers.vote"({ _id, coupleId, points }) {
-    Answers.update(_id, { $push: { votedCouples: coupleId, points } });
+    return Answers.update(_id, { $push: { votedCouples: coupleId, points } });
     console.log(`couple ${coupleId} vouted ${points} points`);
   },
 });

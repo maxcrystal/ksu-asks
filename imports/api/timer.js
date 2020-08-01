@@ -18,16 +18,16 @@ if (Meteor.isServer) {
 
 Meteor.methods({
   "timer.update"({ startDate, maxTime, isActive, reason }) {
-    Timer.update(
+    return Timer.update(
       {},
       { $set: { startDate, maxTime, isActive, updatedAt: Date.now(), reason } }
     );
   },
   "timer.stop"(reason) {
-    Timer.update({}, { $set: { isActive: false, reason } });
+    return Timer.update({}, { $set: { isActive: false, reason } });
   },
   "timer.start"(maxTime, reason) {
-    Timer.update({}, { $set: { maxTime, isActive: true, reason } });
+    return Timer.update({}, { $set: { maxTime, isActive: true, reason } });
   },
 });
 

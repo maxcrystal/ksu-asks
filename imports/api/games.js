@@ -20,7 +20,7 @@ if (Meteor.isServer) {
 
 Meteor.methods({
   "games.insert"({ name }) {
-    Games.insert({
+    return Games.insert({
       name,
       slug: slugify(name, { replace: { ".": "-" } }),
       isActive: true,
@@ -30,10 +30,10 @@ Meteor.methods({
     });
   },
   "games.setActiveQuestion"({ _id, activeQuestionId }) {
-    Games.update(_id, { $set: { activeQuestionId } });
+    return Games.update(_id, { $set: { activeQuestionId } });
   },
   "games.resetActiveQuestion"(_id) {
-    Games.update(_id, { $set: { activeQuestionId: "" } });
+    return Games.update(_id, { $set: { activeQuestionId: "" } });
   },
 });
 

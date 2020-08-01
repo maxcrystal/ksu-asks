@@ -25,7 +25,7 @@ Meteor.methods({
     const names = { he, she };
     const slug = slugify(`${he}-${she}`, { replace: { ".": "-" } }); // TODO check for uniqness
 
-    Couples.insert({
+    return Couples.insert({
       names,
       slug,
       gameId,
