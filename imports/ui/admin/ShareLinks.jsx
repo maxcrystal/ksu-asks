@@ -7,6 +7,7 @@ import { Couples } from "../../api/couples";
 import { Games } from "../../api/games";
 
 const handleShareLinks = ({ couples, game }) => {
+  console.log(couples, game);
   const shareLinks = couples.map(
     couple =>
       `${couple.names.he} & ${couple.names.she}: ` +
@@ -20,7 +21,7 @@ const handleShareLinks = ({ couples, game }) => {
 
 const ShareLinks = () => {
   const { couples, game } = useTracker(() => {
-    const game = Games.find({ isActive: true }).fetch();
+    const game = Games.findOne({ isActive: true });
     const couples = Couples.find({ gameId: game._id }).fetch();
     return { couples, game };
   });

@@ -21,7 +21,6 @@ if (Meteor.isServer) {
 Meteor.methods({
   "couples.insert"({ he, she, gameId }) {
     // TODO: validate
-
     const names = { he, she };
     const slug = slugify(`${he}-${she}`, { replace: { ".": "-" } }); // TODO check for uniqness
 
@@ -30,11 +29,19 @@ Meteor.methods({
       slug,
       gameId,
       createdAt: Date.now(),
+      updatedAt: Date.now(),
     });
+  },
+  "couples.assignGame"({ gameId }) {
+    // TODO: validate
+    return Couples.update(
+      { gameId: "new-game" },
+      { $set: { gameId, updatedAt: Date.now() } },
+      { multi: true }
+    );
   },
   "couples.remove"({ _id }) {
     // TODO validate
-
     Couples.remove({ _id });
   },
 });

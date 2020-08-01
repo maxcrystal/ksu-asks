@@ -15,7 +15,6 @@ const AdminPage = () => {
       <AddCouple />
       <hr />
       <AddGame />
-      <button>New Game</button>
       <hr />
       <ShareLinks />
     </div>
