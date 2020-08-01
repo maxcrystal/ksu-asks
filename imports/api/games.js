@@ -1,6 +1,7 @@
 import { Mongo } from "meteor/mongo";
 import { Meteor } from "meteor/meteor";
 import { slugify } from "transliteration";
+import SimpleSchema from "simpl-schema";
 
 const Games = new Mongo.Collection("games");
 
@@ -20,6 +21,12 @@ if (Meteor.isServer) {
 
 Meteor.methods({
   "games.insert"({ name }) {
+    const schema = new SimpleSchema({
+      name: { type: String, min: 1 },
+    });
+    schema.clean({ name });
+    schema.validate({ name });
+
     return Games.insert({
       name,
       slug: slugify(name, { replace: { ".": "-" } }),
@@ -30,9 +37,20 @@ Meteor.methods({
     });
   },
   "games.setActiveQuestion"({ _id, activeQuestionId }) {
+    const schema = new SimpleSchema({
+      _id: { type: String, min: 1 },
+      activeQuestionId: { type: String, min: 1 },
+    });
+    schema.validate({ _id, activeQuestionId });
+
     return Games.update(_id, { $set: { activeQuestionId } });
   },
   "games.resetActiveQuestion"(_id) {
+    const schema = new SimpleSchema({
+      _id: { type: String, min: 1 },
+    });
+    schema.validate({ _id });
+
     return Games.update(_id, { $set: { activeQuestionId: "" } });
   },
 });
