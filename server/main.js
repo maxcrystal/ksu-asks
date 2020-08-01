@@ -6,6 +6,7 @@ import { Couples } from "../imports/api/couples";
 import { Answers } from "../imports/api/answers";
 import { Timer } from "../imports/api/timer";
 
+import "../imports/startup/simpl-schema-configuration";
 import "../imports/api/questions";
 import "../imports/api/couples";
 import "../imports/api/games";
