@@ -1,17 +1,17 @@
 import { Meteor } from "meteor/meteor";
 
-import { Questions } from "../imports/api/questions";
-import { Games } from "../imports/api/games";
-import { Couples } from "../imports/api/couples";
-import { Answers } from "../imports/api/answers";
-import { Timer } from "../imports/api/timer";
-
 import "../imports/startup/simpl-schema-configuration";
 import "../imports/api/questions";
 import "../imports/api/couples";
 import "../imports/api/games";
 import "../imports/api/answers";
 import "../imports/api/timer";
+
+import { Questions } from "../imports/api/questions";
+import { Games } from "../imports/api/games";
+import { Couples } from "../imports/api/couples";
+import { Answers } from "../imports/api/answers";
+import { Timer } from "../imports/api/timer";
 
 Meteor.startup(() => {
   Mongo.Collection.prototype.aggregate = function (pipelines, options) {
