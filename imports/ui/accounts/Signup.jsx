@@ -1,9 +1,8 @@
 import React, { useState, useRef } from "react";
-import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 import { useTracker } from "meteor/react-meteor-data";
 
-const Login = () => {
+const Signup = () => {
   const [error, setError] = useState("");
   const userId = useTracker(() => Accounts.userId());
   const emailInput = useRef();
@@ -15,13 +14,20 @@ const Login = () => {
     const email = emailInput.current.value.trim();
     const password = passwordInput.current.value.trim();
 
-    Meteor.loginWithPassword({ email }, password, error => {
+    if (password.length < 8) {
+      return setError("Password must be more than 8 characters long");
+    }
+
+    Accounts.createUser({ email, password }, error => {
       if (error) {
         setError(error.reason);
       } else {
         setError("");
       }
     });
+
+    emailInput.current.value = "";
+    passwordInput.current.value = "";
   };
 
   if (userId) {
@@ -29,7 +35,7 @@ const Login = () => {
   } else {
     return (
       <div>
-        <h3>Login:</h3>
+        <h3>Signup:</h3>
 
         {error ? <p>{error}</p> : null}
 
@@ -46,11 +52,11 @@ const Login = () => {
             name="password"
             placeholder="Password"
           />
-          <button>Login</button>
+          <button>Create Account</button>
         </form>
       </div>
     );
   }
 };
 
-export { Login };
+export { Signup };

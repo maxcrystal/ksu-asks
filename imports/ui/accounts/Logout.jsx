@@ -1,0 +1,15 @@
+import React from "react";
+import { Accounts } from "meteor/accounts-base";
+import { useTracker } from "meteor/react-meteor-data";
+
+const Logout = () => {
+  const userId = useTracker(() => Accounts.userId());
+
+  if (!userId) {
+    return null;
+  } else {
+    return <button onClick={() => Accounts.logout()}>Logout</button>;
+  }
+};
+
+export { Logout };
