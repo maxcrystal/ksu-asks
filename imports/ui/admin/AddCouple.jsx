@@ -5,9 +5,15 @@ const handleAddCoupleClick = e => {
   e.preventDefault();
   const hisNameInput = document.getElementById("his-name");
   const herNameInput = document.getElementById("her-name");
+  const he = hisNameInput.value.trim();
+  const she = herNameInput.value.trim();
+  if (he.length === 0 || she.length === 0) {
+    return;
+  }
+
   Meteor.call("couples.insert", {
-    he: hisNameInput.value.trim(),
-    she: herNameInput.value.trim(),
+    he,
+    she,
     gameId: "new-game",
   });
   hisNameInput.value = "";
