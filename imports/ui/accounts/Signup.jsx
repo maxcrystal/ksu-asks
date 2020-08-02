@@ -23,12 +23,11 @@ const Signup = () => {
       if (error) {
         setError(error.reason);
       } else {
+        emailInput.current.value = "";
+        passwordInput.current.value = "";
         setError("");
       }
     });
-
-    emailInput.current.value = "";
-    passwordInput.current.value = "";
   };
 
   if (userId) {

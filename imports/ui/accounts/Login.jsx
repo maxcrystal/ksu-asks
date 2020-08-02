@@ -18,6 +18,8 @@ const Login = () => {
       if (error) {
         setError(error.reason);
       } else {
+        emailInput.current.value = "";
+        passwordInput.current.value = "";
         setError("");
       }
     });
