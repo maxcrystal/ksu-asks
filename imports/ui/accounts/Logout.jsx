@@ -4,7 +4,7 @@ import { Accounts } from "meteor/accounts-base";
 import { useTracker } from "meteor/react-meteor-data";
 
 const Logout = () => {
-  const userId = useTracker(() => Meteor.userId());
+  const userId = useTracker(() => Meteor.userId(), []);
 
   if (!userId) {
     return null;

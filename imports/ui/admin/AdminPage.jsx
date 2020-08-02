@@ -14,7 +14,7 @@ const AdminPage = () => {
     const userId = Meteor.userId();
     const game = Games.findOne({ isActive: true });
     return { userId, game };
-  });
+  }, []);
 
   if (!userId) {
     return null;

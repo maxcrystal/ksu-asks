@@ -27,7 +27,7 @@ const GamePage = () => {
     const isReady = subcriptions.every(subscription => subscription.ready());
 
     return { questions, game, answers, couples, isReady };
-  });
+  }, []);
 
   const newQuestionClickHandler = () => {
     const answeredQuestionsIds = answers.map(answer => answer.questionId);

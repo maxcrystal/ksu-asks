@@ -24,7 +24,7 @@ const CoupleList = () => {
     const userId = Meteor.userId();
     const couples = Couples.find({ gameId: userId }).fetch();
     return { userId, couples };
-  });
+  }, []);
 
   return (
     <div>

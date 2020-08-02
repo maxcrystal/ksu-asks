@@ -12,7 +12,7 @@ const ShareLinks = () => {
     const game = Games.findOne({ isActive: true }) || { _id: userId };
     const couples = Couples.find({ gameId: game._id }).fetch();
     return { couples, game, userId };
-  });
+  }, []);
 
   const handleShareLinks = ({ couples, game }) => {
     if (game._id === userId) {

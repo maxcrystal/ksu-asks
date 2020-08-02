@@ -5,7 +5,7 @@ import { useTracker } from "meteor/react-meteor-data";
 
 const Signup = () => {
   const [error, setError] = useState("");
-  const userId = useTracker(() => Meteor.userId());
+  const userId = useTracker(() => Meteor.userId(), []);
   const emailInput = useRef();
   const passwordInput = useRef();
 
