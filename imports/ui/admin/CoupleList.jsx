@@ -4,11 +4,11 @@ import { useTracker } from "meteor/react-meteor-data";
 
 import { Couples } from "../../api/couples";
 
-const handleRemoveCoupleClick = _id => {
-  Meteor.call("couples.remove", { _id });
-};
-
 const Couple = ({ couple }) => {
+  const handleRemoveCoupleClick = _id => {
+    Meteor.call("couples.remove", { _id });
+  };
+
   return (
     <div>
       <span>
@@ -20,8 +20,10 @@ const Couple = ({ couple }) => {
 };
 
 const CoupleList = () => {
-  const couples = useTracker(() => {
-    return Couples.find({ gameId: "new-game" }).fetch();
+  const { userId, couples } = useTracker(() => {
+    const userId = Meteor.userId();
+    const couples = Couples.find({ gameId: userId }).fetch();
+    return { userId, couples };
   });
 
   return (

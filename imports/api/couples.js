@@ -45,8 +45,8 @@ Meteor.methods({
   },
   "couples.assignGame"({ gameId }) {
     new SimpleSchema({ gameId: { type: String, min: 1 } }).validate({ gameId });
-
-    const couples = Couples.find({ gameId: "new-game" }).fetch(); // TODO replace "new-game" with userId everywhere
+    const userId = Meteor.userId();
+    const couples = Couples.find({ gameId: userId }).fetch();
     const length = couples.length;
     for (let i = 0; i < length; i++) {
       const _id = couples[i]._id;

@@ -1,10 +1,11 @@
 import React, { useState, useRef } from "react";
+import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 import { useTracker } from "meteor/react-meteor-data";
 
 const Signup = () => {
   const [error, setError] = useState("");
-  const userId = useTracker(() => Accounts.userId());
+  const userId = useTracker(() => Meteor.userId());
   const emailInput = useRef();
   const passwordInput = useRef();
 

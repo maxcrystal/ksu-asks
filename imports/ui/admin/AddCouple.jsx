@@ -1,7 +1,9 @@
 import React, { useRef } from "react";
 import { Meteor } from "meteor/meteor";
+import { useTracker } from "meteor/react-meteor-data";
 
 const AddCouple = ({ game }) => {
+  const userId = useTracker(() => Meteor.userId());
   const hisNameInput = useRef();
   const herNameInput = useRef();
 
@@ -17,7 +19,7 @@ const AddCouple = ({ game }) => {
       he,
       she,
       nextCoupleId: "",
-      gameId: "new-game",
+      gameId: userId,
     });
     hisNameInput.current.value = "";
     herNameInput.current.value = "";

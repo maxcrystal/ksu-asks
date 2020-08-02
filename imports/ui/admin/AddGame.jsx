@@ -1,9 +1,15 @@
 import React, { useRef } from "react";
+import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 
 import { Couples } from "../../api/couples";
 
 const AddGame = ({ game }) => {
+  const { userId, couples } = useTracker(() => {
+    const userId = Meteor.userId();
+    const couples = Couples.find({ gameId: userId }).fetch();
+    return { userId, couples };
+  });
   const gameNameInput = useRef();
 
   const handleOkClick = e => {
@@ -22,9 +28,6 @@ const AddGame = ({ game }) => {
     gameNameInput.current.value = "";
   };
 
-  const couples = useTracker(() => {
-    return Couples.find({ gameId: "new-game" }).fetch();
-  });
   if (game || couples.length < 2) {
     return null;
   }
