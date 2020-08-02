@@ -43,7 +43,9 @@ Meteor.methods({
     });
     schema.validate({ _id, activeQuestionId });
 
-    return Games.update(_id, { $set: { activeQuestionId } });
+    return Games.update(_id, {
+      $set: { activeQuestionId, updatedAt: Date.now() },
+    });
   },
   "games.resetActiveQuestion"(_id) {
     const schema = new SimpleSchema({
@@ -51,7 +53,9 @@ Meteor.methods({
     });
     schema.validate({ _id });
 
-    return Games.update(_id, { $set: { activeQuestionId: "" } });
+    return Games.update(_id, {
+      $set: { activeQuestionId: "", updatedAt: Date.now() },
+    });
   },
 });
 
