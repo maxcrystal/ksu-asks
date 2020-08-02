@@ -3,15 +3,14 @@ import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 
 import { AnswerPage } from "./AnswerPage";
-import { AdminPage } from "./admin/AdminPage";
 
-import { Questions } from "../api/questions";
-import { Games } from "../api/games";
-import { Answers } from "../api/answers";
-import { Couples } from "../api/couples";
-import { timerReasons } from "../api/timer";
+import { Questions } from "../../api/questions";
+import { Games } from "../../api/games";
+import { Answers } from "../../api/answers";
+import { Couples } from "../../api/couples";
+import { timerReasons } from "../../api/timer";
 
-const MainPage = () => {
+const GamePage = () => {
   const { questions, game, answers, couples, isReady } = useTracker(() => {
     const subcriptions = [
       Meteor.subscribe("questions"),
@@ -100,9 +99,8 @@ const MainPage = () => {
           New question - <i>Visible only to one couple</i>
         </button>
       )}
-      <AdminPage />
     </div>
   );
 };
 
-export { MainPage };
+export { GamePage };

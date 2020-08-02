@@ -1,11 +1,13 @@
 import React from "react";
 
-import { MainPage } from "./MainPage";
+import { GamePage } from "./game/GamePage";
+import { AdminPage } from "./admin/AdminPage";
 
 export const App = props => {
   return (
     <div>
-      <MainPage />
+      <GamePage />
+      <AdminPage />
     </div>
   );
 };

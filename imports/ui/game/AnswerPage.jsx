@@ -3,7 +3,7 @@ import { Meteor } from "meteor/meteor";
 
 import { VotingPage } from "./VotingPage";
 import { Timer } from "./Timer";
-import { timerReasons } from "../api/timer";
+import { timerReasons } from "../../api/timer";
 
 const AnswerPage = ({ question, game, answer, couples }) => {
   [text, setText] = useState(answer ? answer.text : "");

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 
-import { Timer as TimerCollection, timerReasons } from "../api/timer";
+import { Timer as TimerCollection, timerReasons } from "../../api/timer";
 
 const Timer = ({ onTimeEllapsed }) => {
   const [ellapsedTime, setEllapsedTime] = useState(0);
