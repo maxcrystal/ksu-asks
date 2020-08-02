@@ -27,31 +27,30 @@ const Login = () => {
 
   if (userId) {
     return null;
-  } else {
-    return (
-      <div>
-        <h3>Login:</h3>
-
-        {error ? <p>{error}</p> : null}
-
-        <form onSubmit={onSubmit} noValidate>
-          <input
-            type="email"
-            ref={emailInput}
-            name="login-email"
-            placeholder="Email"
-          />
-          <input
-            type="password"
-            ref={passwordInput}
-            name="login-password"
-            placeholder="Password"
-          />
-          <button>Login</button>
-        </form>
-      </div>
-    );
   }
+  return (
+    <div>
+      <h3>Login:</h3>
+
+      {error ? <p>{error}</p> : null}
+
+      <form onSubmit={onSubmit} noValidate>
+        <input
+          type="email"
+          ref={emailInput}
+          name="login-email"
+          placeholder="Email"
+        />
+        <input
+          type="password"
+          ref={passwordInput}
+          name="login-password"
+          placeholder="Password"
+        />
+        <button>Login</button>
+      </form>
+    </div>
+  );
 };
 
 export { Login };

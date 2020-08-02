@@ -8,9 +8,8 @@ const Logout = () => {
 
   if (!userId) {
     return null;
-  } else {
-    return <button onClick={() => Accounts.logout()}>Logout</button>;
   }
+  return <button onClick={() => Accounts.logout()}>Logout</button>;
 };
 
 export { Logout };

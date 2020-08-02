@@ -32,31 +32,30 @@ const Signup = () => {
 
   if (userId) {
     return null;
-  } else {
-    return (
-      <div>
-        <h3>Signup:</h3>
-
-        {error ? <p>{error}</p> : null}
-
-        <form onSubmit={onSubmit} noValidate>
-          <input
-            type="email"
-            ref={emailInput}
-            name="signup-email"
-            placeholder="Email"
-          />
-          <input
-            type="password"
-            ref={passwordInput}
-            name="signup-password"
-            placeholder="Password"
-          />
-          <button>Create Account</button>
-        </form>
-      </div>
-    );
   }
+  return (
+    <div>
+      <h3>Signup:</h3>
+
+      {error ? <p>{error}</p> : null}
+
+      <form onSubmit={onSubmit} noValidate>
+        <input
+          type="email"
+          ref={emailInput}
+          name="signup-email"
+          placeholder="Email"
+        />
+        <input
+          type="password"
+          ref={passwordInput}
+          name="signup-password"
+          placeholder="Password"
+        />
+        <button>Create Account</button>
+      </form>
+    </div>
+  );
 };
 
 export { Signup };
