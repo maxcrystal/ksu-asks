@@ -13,7 +13,7 @@ if (Meteor.isServer) {
 Meteor.methods({
   "answers.insert"({ text, questionId, coupleId, gameId }) {
     const schema = new SimpleSchema({
-      text: { type: String, min: 1 },
+      text: { type: String },
       questionId: { type: String, min: 1 },
       coupleId: { type: String, min: 1 },
       gameId: { type: String, min: 1 },
