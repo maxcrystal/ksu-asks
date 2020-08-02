@@ -10,9 +10,6 @@ import "../imports/api/timer";
 import "../imports/api/users";
 
 import { Questions } from "../imports/api/questions";
-import { Games } from "../imports/api/games";
-import { Couples } from "../imports/api/couples";
-import { Answers } from "../imports/api/answers";
 import { Timer } from "../imports/api/timer";
 
 Meteor.startup(() => {

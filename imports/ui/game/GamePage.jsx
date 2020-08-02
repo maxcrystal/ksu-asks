@@ -75,6 +75,10 @@ const GamePage = () => {
     console.log("activeQuestionId", randomQuestion._id, game.activeQuestionId);
   };
 
+  if (!game) {
+    return null;
+  }
+
   if (!isReady) {
     return <p>Loading...</p>;
   }
