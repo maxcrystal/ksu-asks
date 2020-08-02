@@ -4,8 +4,8 @@ import { render } from "react-dom";
 import { Tracker } from "meteor/tracker";
 
 import "../imports/startup/simpl-schema-configuration";
-import { App } from "/imports/ui/App";
+import { Routes } from "../imports/ui/routes/Routes";
 
 Meteor.startup(() => {
-  render(<App />, document.getElementById("app"));
+  render(<Routes />, document.getElementById("app"));
 });
