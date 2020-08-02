@@ -44,13 +44,13 @@ const Signup = () => {
           <input
             type="email"
             ref={emailInput}
-            name="email"
+            name="signup-email"
             placeholder="Email"
           />
           <input
             type="password"
             ref={passwordInput}
-            name="password"
+            name="signup-password"
             placeholder="Password"
           />
           <button>Create Account</button>

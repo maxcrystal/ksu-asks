@@ -1,4 +1,5 @@
 import React from "react";
+import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 
 import { AddGame } from "./AddGame";
@@ -9,9 +10,15 @@ import { FinishGame } from "./FinishGame";
 import { Games } from "../../api/games";
 
 const AdminPage = () => {
-  const game = useTracker(() => {
-    return Games.findOne({ isActive: true });
+  const { userId, game } = useTracker(() => {
+    const userId = Meteor.userId();
+    const game = Games.findOne({ isActive: true });
+    return { userId, game };
   });
+
+  if (!userId) {
+    return null;
+  }
   return (
     <div>
       <hr />

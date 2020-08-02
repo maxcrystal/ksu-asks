@@ -36,13 +36,13 @@ const Login = () => {
           <input
             type="email"
             ref={emailInput}
-            name="email"
+            name="login-email"
             placeholder="Email"
           />
           <input
             type="password"
             ref={passwordInput}
-            name="password"
+            name="login-password"
             placeholder="Password"
           />
           <button>Login</button>
