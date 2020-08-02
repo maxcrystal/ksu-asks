@@ -20,7 +20,10 @@ const handleAddCoupleClick = e => {
   herNameInput.value = "";
 };
 
-const AddCouple = () => {
+const AddCouple = ({ game }) => {
+  if (game) {
+    return null;
+  }
   return (
     <div>
       <form>

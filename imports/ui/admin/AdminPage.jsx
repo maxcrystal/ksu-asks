@@ -17,9 +17,8 @@ const AdminPage = () => {
       <hr />
       <h3>AdminPage Content Below (visible to admins only):</h3>
       <CoupleList />
-      <AddCouple />
-      <hr />
-      <AddGame />
+      <AddCouple game={game} />
+      <AddGame game={game} />
       <FinishGame game={game} />
       <hr />
       <ShareLinks />

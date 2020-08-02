@@ -1,4 +1,7 @@
 import React from "react";
+import { useTracker } from "meteor/react-meteor-data";
+
+import { Couples } from "../../api/couples";
 
 const handleOkClick = e => {
   e.preventDefault();
@@ -17,7 +20,13 @@ const handleOkClick = e => {
   nameInput.value = "";
 };
 
-const AddGame = () => {
+const AddGame = ({ game }) => {
+  const couples = useTracker(() => {
+    return Couples.find({ gameId: "new-game" }).fetch();
+  });
+  if (game || couples.length < 2) {
+    return null;
+  }
   return (
     <form>
       <span>New game: </span>
