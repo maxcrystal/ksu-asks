@@ -23,6 +23,10 @@ if (Meteor.isServer) {
 
 Meteor.methods({
   "couples.insert"({ he, she, gameId }) {
+    if (!Meteor.userId()) {
+      throw new Meteor.Error("not-authorised");
+    }
+
     const schema = new SimpleSchema({
       he: { type: String, min: 1 },
       she: { type: String, min: 1 },
@@ -44,6 +48,10 @@ Meteor.methods({
     });
   },
   "couples.assignGame"({ gameId }) {
+    if (!Meteor.userId()) {
+      throw new Meteor.Error("not-authorised");
+    }
+
     new SimpleSchema({ gameId: { type: String, min: 1 } }).validate({ gameId });
     const userId = Meteor.userId();
     const couples = Couples.find({ gameId: userId }).fetch();
@@ -58,6 +66,10 @@ Meteor.methods({
     }
   },
   "couples.remove"({ _id }) {
+    if (!Meteor.userId()) {
+      throw new Meteor.Error("not-authorised");
+    }
+
     new SimpleSchema({ _id: { type: String, min: 1 } }).validate({ _id });
 
     Couples.remove({ _id });

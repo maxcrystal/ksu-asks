@@ -21,6 +21,10 @@ if (Meteor.isServer) {
 
 Meteor.methods({
   "games.insert"({ name }) {
+    if (!Meteor.userId()) {
+      throw new Meteor.Error("not-authorised");
+    }
+
     const schema = new SimpleSchema({
       name: { type: String, min: 1 },
     });
@@ -32,7 +36,7 @@ Meteor.methods({
       slug: slugify(name, { replace: { ".": "-" } }),
       isActive: true,
       activeQuestionId: "",
-      admin: "test admin id", // TODO add admin parameter
+      admin: Meteor.userId(),
       createdAt: Date.now(),
       updatedAt: Date.now(),
     });

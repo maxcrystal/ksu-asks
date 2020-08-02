@@ -17,6 +17,10 @@ if (Meteor.isServer) {
 
 Meteor.methods({
   "questions.insert"({ text }) {
+    if (!Meteor.userId()) {
+      throw new Meteor.Error("not-authorised");
+    }
+
     const schema = new SimpleSchema({
       text: { type: String, min: 1 },
     });
