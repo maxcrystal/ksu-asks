@@ -10,6 +10,7 @@ const Couples = new Mongo.Collection("couples");
  * names: object {he: string, she: string},
  * slug: sanitized name to use as parto of the links adddress
  * gameId: game id
+ * nextCoupleId
  * createdAT
  * updatedAT
  */
@@ -37,6 +38,7 @@ Meteor.methods({
       names,
       slug,
       gameId,
+      nextCoupleId: "",
       createdAt: Date.now(),
       updatedAt: Date.now(),
     });
@@ -44,11 +46,16 @@ Meteor.methods({
   "couples.assignGame"({ gameId }) {
     new SimpleSchema({ gameId: { type: String, min: 1 } }).validate({ gameId });
 
-    return Couples.update(
-      { gameId: "new-game" },
-      { $set: { gameId, updatedAt: Date.now() } },
-      { multi: true }
-    );
+    const couples = Couples.find({ gameId: "new-game" }).fetch(); // TODO replace "new-game" with userId everywhere
+    const length = couples.length;
+    for (let i = 0; i < length; i++) {
+      const _id = couples[i]._id;
+      const nextCoupleId = i < length - 1 ? couples[i + 1]._id : couples[0]._id;
+      Couples.update(
+        { _id },
+        { $set: { nextCoupleId, gameId, updatedAt: Date.now() } }
+      );
+    }
   },
   "couples.remove"({ _id }) {
     new SimpleSchema({ _id: { type: String, min: 1 } }).validate({ _id });

@@ -16,6 +16,7 @@ const AddCouple = ({ game }) => {
     Meteor.call("couples.insert", {
       he,
       she,
+      nextCoupleId: "",
       gameId: "new-game",
     });
     hisNameInput.current.value = "";
