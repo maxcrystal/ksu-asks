@@ -83,26 +83,30 @@ const GamePage = () => {
     return <p>Loading...</p>;
   }
 
-  return (
-    <div>
-      {game.activeQuestionId ? (
-        <AnswerPage
-          question={questions.find(
-            question => question._id === game.activeQuestionId
-          )}
-          game={game}
-          couples={couples}
-          answer={answers.find(
-            answer =>
-              answer.gameId === game._id &&
-              answer.questionId === game.activeQuestionId
-          )}
-        />
-      ) : (
+  if (!game.activeQuestionId) {
+    return (
+      <div>
         <button onClick={newQuestionClickHandler}>
           New question - <i>Visible only to one couple</i>
         </button>
-      )}
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <AnswerPage
+        question={questions.find(
+          question => question._id === game.activeQuestionId
+        )}
+        game={game}
+        couples={couples}
+        answer={answers.find(
+          answer =>
+            answer.gameId === game._id &&
+            answer.questionId === game.activeQuestionId
+        )}
+      />
     </div>
   );
 };

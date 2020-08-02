@@ -13,7 +13,7 @@ const AnswerPage = ({ question, game, answer, couples }) => {
   }, []);
 
   useEffect(() => {
-    const isVoteFinished = answer.votedCouples.length === couples.length - 2; // FIXME chnge to -1 (-2 for debug only)
+    const isVoteFinished = answer.votedCouples.length === couples.length - 1;
     if (isVoteFinished) {
       resetActiveQuestion();
     }
@@ -87,9 +87,13 @@ const AnswerPage = ({ question, game, answer, couples }) => {
       {answer.isAnswered ? (
         <VotingPage
           answer={answer}
-          couples={{ _id: "NQ2Tobha2ycSCaXmQ" } /*FIXME couples prop*/}
+          couples={
+            {
+              _id: "NQ2Tobha2ycSCaXmQ",
+            } /*FIXME couples should be couples prop*/
+          }
         />
-      ) : undefined}{" "}
+      ) : undefined}
     </div>
   );
 };
