@@ -1,6 +1,7 @@
 import { Mongo } from "meteor/mongo";
 import { Meteor } from "meteor/meteor";
 import { slugify } from "transliteration";
+import SimpleSchema from "simpl-schema";
 
 const Couples = new Mongo.Collection("couples");
 
@@ -10,6 +11,7 @@ const Couples = new Mongo.Collection("couples");
  * slug: sanitized name to use as parto of the links adddress
  * gameId: game id
  * createdAT
+ * updatedAT
  */
 
 if (Meteor.isServer) {
@@ -20,7 +22,14 @@ if (Meteor.isServer) {
 
 Meteor.methods({
   "couples.insert"({ he, she, gameId }) {
-    // TODO: validate
+    const schema = new SimpleSchema({
+      he: { type: String, min: 1 },
+      she: { type: String, min: 1 },
+      gameId: { type: String, min: 1 },
+    });
+    schema.clean({ he, she });
+    schema.validate({ he, she, gameId });
+
     const names = { he, she };
     const slug = slugify(`${he}-${she}`, { replace: { ".": "-" } }); // TODO check for uniqness
 
@@ -33,7 +42,8 @@ Meteor.methods({
     });
   },
   "couples.assignGame"({ gameId }) {
-    // TODO: validate
+    new SimpleSchema({ gameId: { type: String, min: 1 } }).validate({ gameId });
+
     return Couples.update(
       { gameId: "new-game" },
       { $set: { gameId, updatedAt: Date.now() } },
@@ -41,7 +51,8 @@ Meteor.methods({
     );
   },
   "couples.remove"({ _id }) {
-    // TODO validate
+    new SimpleSchema({ _id: { type: String, min: 1 } }).validate({ _id });
+
     Couples.remove({ _id });
   },
 });

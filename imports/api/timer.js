@@ -20,14 +20,20 @@ Meteor.methods({
   "timer.update"({ startDate, maxTime, isActive, reason }) {
     return Timer.update(
       {},
-      { $set: { startDate, maxTime, isActive, updatedAt: Date.now(), reason } }
+      { $set: { startDate, maxTime, isActive, reason, updatedAt: Date.now() } }
     );
   },
   "timer.stop"(reason) {
-    return Timer.update({}, { $set: { isActive: false, reason } });
+    return Timer.update(
+      {},
+      { $set: { isActive: false, reason, updatedAt: Date.now() } }
+    );
   },
   "timer.start"(maxTime, reason) {
-    return Timer.update({}, { $set: { maxTime, isActive: true, reason } });
+    return Timer.update(
+      {},
+      { $set: { maxTime, isActive: true, reason, updatedAt: Date.now() } }
+    );
   },
 });
 

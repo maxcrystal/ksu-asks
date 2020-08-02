@@ -34,6 +34,7 @@ Meteor.methods({
       activeQuestionId: "",
       admin: "test admin id", // TODO add admin parameter
       createdAt: Date.now(),
+      updatedAt: Date.now(),
     });
   },
   "games.setActiveQuestion"({ _id, activeQuestionId }) {
