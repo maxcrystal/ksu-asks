@@ -8,7 +8,6 @@ const AddGame = ({ game }) => {
   const { userId, couples } = useTracker(() => {
     const userId = Meteor.userId();
     const couples = Couples.find({ gameId: userId }).fetch();
-    console.log("couples", couples.length);
     return { userId, couples };
   }, []);
   const gameNameInput = useRef();
