@@ -34,36 +34,10 @@ Meteor.startup(() => {
   if (Questions.find().count() === 0) {
     console.log("Questions are set");
     for (let i = 0; i < 10; i++) {
-      Meteor.call("questions.insert", {
+      Questions.insert({
         text: `This is a question text number ${i}. What is your answer?`,
       });
     }
-  }
-
-  if (Couples.find().count() === 0) {
-    console.log("Couplse are set");
-    Meteor.call("couples.insert", {
-      he: "Макс",
-      she: "Ксю",
-      gameId: "FfKA4D8iXXmr9LYXP",
-    });
-    Meteor.call("couples.insert", {
-      he: "Лелик",
-      she: "Марианна",
-      gameId: "FfKA4D8iXXmr9LYXP",
-    });
-    Meteor.call("couples.insert", {
-      he: "Вовчик",
-      she: "Оля",
-      gameId: "FfKA4D8iXXmr9LYXP",
-    });
-  }
-
-  if (Games.find().count() === 0) {
-    console.log("Test game is set");
-    Meteor.call("games.insert", {
-      name: "Тестовая игра",
-    });
   }
 
   if (Timer.find().count() === 0) {
