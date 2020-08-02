@@ -37,6 +37,11 @@ Meteor.methods({
       updatedAt: Date.now(),
     });
   },
+  "games.finishGame"({ _id }) {
+    new SimpleSchema({ _id: { type: String, min: 1 } }).validate({ _id });
+
+    return Games.update(_id, { $set: { isActive: false } });
+  },
   "games.setActiveQuestion"({ _id, activeQuestionId }) {
     const schema = new SimpleSchema({
       _id: { type: String, min: 1 },
@@ -48,7 +53,7 @@ Meteor.methods({
       $set: { activeQuestionId, updatedAt: Date.now() },
     });
   },
-  "games.resetActiveQuestion"(_id) {
+  "games.resetActiveQuestion"({ _id }) {
     const schema = new SimpleSchema({
       _id: { type: String, min: 1 },
     });

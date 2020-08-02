@@ -60,7 +60,7 @@ const AnswerPage = ({ question, game, answer, couples }) => {
   };
 
   const resetActiveQuestion = () => {
-    Meteor.call("games.resetActiveQuestion", game._id);
+    Meteor.call("games.resetActiveQuestion", { _id: game._id });
     console.log("reset active question for game", game);
   };
 
