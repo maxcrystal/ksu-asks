@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 
-import { Answers } from "../../api/answers";
-
 const VotingPage = ({ answer, couples }) => {
   const coupleId = "NQ2Tobha2ycSCaXmQ"; //FIXME proper use of couple ID through session var
 

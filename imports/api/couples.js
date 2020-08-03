@@ -2,6 +2,7 @@ import { Mongo } from "meteor/mongo";
 import { Meteor } from "meteor/meteor";
 import { slugify } from "transliteration";
 import SimpleSchema from "simpl-schema";
+import uid from "uid";
 
 const Couples = new Mongo.Collection("couples");
 
@@ -16,6 +17,7 @@ const Couples = new Mongo.Collection("couples");
  */
 
 if (Meteor.isServer) {
+  Couples.createIndex({ gameId: 1, slug: 1 }, { unique: true });
   Meteor.publish("couples", () => {
     return Couples.find(); // TODO return only cpoules for the current gameId
   });
@@ -36,7 +38,13 @@ Meteor.methods({
     schema.validate({ he, she, gameId });
 
     const names = { he, she };
-    const slug = slugify(`${he}-${she}`, { replace: { ".": "-" } }); // TODO check for uniqness
+    let slug = slugify(`${he}-${she}`, { replace: { ".": "-" } }); // TODO check for uniqness
+
+    let i = 0;
+    while (Couples.find({ gameId, slug }).count() !== 0) {
+      slug += i === 0 ? "-" + uid(1) : uid(1);
+      i++;
+    }
 
     return Couples.insert({
       names,

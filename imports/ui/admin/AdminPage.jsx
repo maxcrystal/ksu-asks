@@ -11,6 +11,7 @@ import { Games } from "../../api/games";
 
 const AdminPage = () => {
   const { userId, game } = useTracker(() => {
+    const subscription = Meteor.subscribe("games");
     const userId = Meteor.userId();
     const game = Games.findOne({ isActive: true });
     return { userId, game };

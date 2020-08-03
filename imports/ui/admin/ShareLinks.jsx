@@ -8,6 +8,10 @@ import { Games } from "../../api/games";
 
 const ShareLinks = () => {
   const { couples, game, userId } = useTracker(() => {
+    const subscriptions = [
+      Meteor.subscribe("couples"),
+      Meteor.subscribe("games"),
+    ];
     const userId = Meteor.userId();
     const game = Games.findOne({ isActive: true }) || { _id: userId };
     const couples = Couples.find({ gameId: game._id }).fetch();

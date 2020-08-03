@@ -6,6 +6,7 @@ import { Couples } from "../../api/couples";
 
 const AddGame = ({ game }) => {
   const { userId, couples } = useTracker(() => {
+    const subscription = Meteor.subscribe("couples");
     const userId = Meteor.userId();
     const couples = Couples.find({ gameId: userId }).fetch();
     return { userId, couples };

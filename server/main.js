@@ -1,6 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
 
+import "../imports/startup/mongodb-configuration";
 import "../imports/startup/simpl-schema-configuration";
 import "../imports/api/questions";
 import "../imports/api/couples";
@@ -13,11 +14,6 @@ import { Questions } from "../imports/api/questions";
 import { Timer } from "../imports/api/timer";
 
 Meteor.startup(() => {
-  Mongo.Collection.prototype.aggregate = function (pipelines, options) {
-    const coll = this.rawCollection();
-    return Meteor.wrapAsync(coll.aggregate.bind(coll))(pipelines, options);
-  };
-
   // Testing user credentials
   if (!Accounts.findUserByEmail("test@example.com")) {
     Accounts.createUser({

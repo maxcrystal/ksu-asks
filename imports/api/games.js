@@ -14,6 +14,7 @@ const Games = new Mongo.Collection("games");
  */
 
 if (Meteor.isServer) {
+  Games.createIndex({ slug: 1 }, { unique: true });
   Meteor.publish("games", () => {
     return Games.find(); // TODO return only current game (store id in session storage)
   });
@@ -31,9 +32,17 @@ Meteor.methods({
     schema.clean({ name });
     schema.validate({ name });
 
+    let slug = slugify(name, { replace: { ".": "-" } });
+
+    let i = 0;
+    while (Couples.find({ slug }).count() !== 0) {
+      slug += i === 0 ? "-" + uid(1) : uid(1);
+      i++;
+    }
+
     return Games.insert({
       name,
-      slug: slugify(name, { replace: { ".": "-" } }),
+      slug,
       isActive: true,
       activeQuestionId: "",
       admin: Meteor.userId(),
