@@ -1,14 +1,6 @@
 import React from "react";
-import { Meteor } from "meteor/meteor";
-import { useTracker } from "meteor/react-meteor-data";
 
-const FrontPage = () => {
-  const userId = useTracker(() => Meteor.userId(), []);
-
-  if (userId) {
-    return null;
-  }
-
+const Rules = () => {
   return (
     <div>
       <h2>FrontPage Content</h2>
@@ -23,4 +15,4 @@ const FrontPage = () => {
   );
 };
 
-export { FrontPage };
+export { Rules };

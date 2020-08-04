@@ -1,35 +1,47 @@
 import React from "react";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
+import { Link } from "react-router-dom";
+
+import { Games } from "../../api/games";
 
 import { AddGame } from "./AddGame";
 import { AddCouple } from "./AddCouple";
 import { CoupleList } from "./CoupleList";
 import { ShareLinks } from "./ShareLinks";
 import { FinishGame } from "./FinishGame";
-import { Games } from "../../api/games";
 
 const AdminPage = () => {
-  const { userId, game } = useTracker(() => {
-    const subscription = Meteor.subscribe("games");
+  const { userId, activeGame } = useTracker(() => {
     const userId = Meteor.userId();
-    const game = Games.findOne({ isActive: true });
-    return { userId, game };
+    const subscription = Meteor.subscribe("admin-games");
+    const activeGame = Games.findOne({ isActive: true });
+    return { userId, activeGame };
   }, []);
 
   if (!userId) {
     return null;
   }
+
+  if (activeGame) {
+    return (
+      <div>
+        <p>
+          Game "<Link to={activeGame.slug}>{activeGame.name}</Link>" is in
+          progress.
+        </p>
+        <ShareLinks game={activeGame} />
+        <FinishGame game={activeGame} />
+      </div>
+    );
+  }
+
   return (
     <div>
-      <hr />
-      <h3>AdminPage Content Below (visible to admins only):</h3>
+      <h3>AdminPage Content (visible to admins only):</h3>
       <CoupleList />
-      <AddCouple game={game} />
-      <AddGame game={game} />
-      <FinishGame game={game} />
-      <hr />
-      <ShareLinks />
+      <AddCouple />
+      <AddGame />
     </div>
   );
 };

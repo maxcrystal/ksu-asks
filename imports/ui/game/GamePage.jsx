@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 
-import { AnswerPage } from "./AnswerPage";
+import { Answer } from "./Answer";
 
 import { Questions } from "../../api/questions";
 import { Games } from "../../api/games";
@@ -11,23 +12,25 @@ import { Couples } from "../../api/couples";
 import { timerReasons } from "../../api/timer";
 
 const GamePage = () => {
-  const { questions, game, answers, couples, isReady } = useTracker(() => {
+  const { gameSlug, coupleSlug } = useParams();
+
+  const isReady = useTracker(() => {
     const subcriptions = [
       Meteor.subscribe("questions"),
-      Meteor.subscribe("answers"), // TODO replace with proper logic using game id
-      Meteor.subscribe("games"), // TODO replace with proper logic using game id
-      Meteor.subscribe("couples"), // TODO replace with proper logic using game id
+      Meteor.subscribe("games", { slug: gameSlug }),
+      Meteor.subscribe("answers", { gameSlug }),
+      Meteor.subscribe("couples", { gameSlug }),
     ];
+    return subcriptions.every(s => s.ready());
+  }, [gameSlug]);
 
-    const questions = Questions.find().fetch();
-    const game = Games.findOne();
-    const answers = Answers.find().fetch();
-    const couples = Couples.find().fetch();
+  const questions = Questions.find().fetch();
+  const answers = Answers.find().fetch();
+  const game = Games.findOne();
 
-    const isReady = subcriptions.every(subscription => subscription.ready());
-
-    return { questions, game, answers, couples, isReady };
-  }, []);
+  const couples = Couples.find().fetch(); // FIXME
+  const thisCouple = Couples.findOne({ slug: coupleSlug });
+  const activeCouple = Couples.findOne({ isActive: true });
 
   const newQuestionClickHandler = () => {
     const answeredQuestionsIds = answers.map(answer => answer.questionId);
@@ -46,18 +49,13 @@ const GamePage = () => {
       Math.random() * unansweredQuestions.length
     );
     const randomQuestion = unansweredQuestions[randomQuestionNumber];
-    console.log(
-      "answered, unanswered, random question id:",
-      answeredQuestionsIds.length,
-      unansweredQuestions.length,
-      randomQuestion._id
-    );
 
     Meteor.call("answers.insert", {
       text: "",
       questionId: randomQuestion._id,
       gameId: game._id,
-      coupleId: "NQ2Tobha2ycSCaXmQ", // TODO replace for the proper logic
+      gameSlug: game.slug,
+      coupleId: thisCouple._id,
     });
 
     Meteor.call("games.setActiveQuestion", {
@@ -75,40 +73,62 @@ const GamePage = () => {
     console.log("activeQuestionId", randomQuestion._id, game.activeQuestionId);
   };
 
-  if (!game) {
-    return null;
-  }
-
   if (!isReady) {
     return <p>Loading...</p>;
   }
 
-  if (!game.activeQuestionId) {
+  if (!thisCouple || !game.isActive) {
+    return null;
+  }
+
+  if (!game.activeQuestionId && thisCouple.isActive) {
+    const [name, whom] =
+      thisCouple.nextInCouple === "he"
+        ? [thisCouple.names.he, "him"]
+        : [thisCouple.names.she, "her"];
     return (
       <div>
-        <button onClick={newQuestionClickHandler}>
-          New question - <i>Visible only to one couple</i>
-        </button>
+        <p>
+          Next question goes to {name}. Please pass {whom} the phone.
+        </p>
+        <button onClick={newQuestionClickHandler}>New question</button>
       </div>
     );
   }
 
-  return (
-    <div>
-      <AnswerPage
-        question={questions.find(
-          question => question._id === game.activeQuestionId
-        )}
-        game={game}
-        couples={couples}
-        answer={answers.find(
-          answer =>
-            answer.gameId === game._id &&
-            answer.questionId === game.activeQuestionId
-        )}
-      />
-    </div>
-  );
+  if (!game.activeQuestionId && !thisCouple.isActive) {
+    const [name, whom] =
+      activeCouple.nextInCouple === "he"
+        ? [activeCouple.names.he, "him"]
+        : [activeCouple.names.she, "her"];
+    return <div>{<p>Next question goes to {name}</p>}</div>;
+  }
+
+  if (game.activeQuestionId) {
+    const question = questions.find(
+      question => question._id === game.activeQuestionId
+    );
+    const answer = answers.find(
+      answer =>
+        answer.gameId === game._id &&
+        answer.questionId === game.activeQuestionId
+    );
+
+    return (
+      <div>
+        <Answer
+          game={game}
+          question={question}
+          thisCouple={thisCouple}
+          activeCouple={activeCouple}
+          couples={couples}
+          answer={answer}
+        />
+      </div>
+    );
+  }
+
+  return null;
 };
 
 export { GamePage };

@@ -3,10 +3,11 @@ import { Accounts } from "meteor/accounts-base";
 
 import "../imports/startup/mongodb-configuration";
 import "../imports/startup/simpl-schema-configuration";
+
 import "../imports/api/questions";
+import "../imports/api/answers";
 import "../imports/api/couples";
 import "../imports/api/games";
-import "../imports/api/answers";
 import "../imports/api/timer";
 import "../imports/api/users";
 

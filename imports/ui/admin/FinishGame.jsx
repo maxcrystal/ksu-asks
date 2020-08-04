@@ -7,9 +7,6 @@ const FinishGame = ({ game }) => {
     Meteor.call("games.finishGame", { _id: game._id });
   };
 
-  if (!game) {
-    return null;
-  }
   return (
     <div>
       <button onClick={() => handelFinishGameClick(game)}>Finish Game</button>

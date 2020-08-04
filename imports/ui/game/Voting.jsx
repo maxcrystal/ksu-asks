@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 
-const VotingPage = ({ answer, couples }) => {
-  const coupleId = "NQ2Tobha2ycSCaXmQ"; //FIXME proper use of couple ID through session var
-
+const Voting = ({ answer, thisCouple }) => {
   const isVoted = useTracker(() => {
-    const isVoted = answer.votedCouples.includes(coupleId); //FIXME proper use of couple ID through session var
+    const isVoted = answer.votedCouples.includes(thisCouple._id); //FIXME proper use of couple ID through session var
     console.log("isVoted", isVoted, answer.votedCouples);
     return isVoted;
   }, [answer.votedCouples.length]);
@@ -14,7 +12,7 @@ const VotingPage = ({ answer, couples }) => {
   const handleVoteClick = points => {
     Meteor.call("answers.vote", {
       _id: answer._id,
-      coupleId,
+      coupleId: thisCouple._id,
       points,
     });
   };
@@ -35,4 +33,4 @@ const VotingPage = ({ answer, couples }) => {
   );
 };
 
-export { VotingPage };
+export { Voting };

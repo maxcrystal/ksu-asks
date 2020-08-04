@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 
-const AddCouple = ({ game }) => {
+const AddCouple = () => {
   const userId = useTracker(() => Meteor.userId(), []);
   const hisNameInput = useRef();
   const herNameInput = useRef();
@@ -20,14 +20,12 @@ const AddCouple = ({ game }) => {
       she,
       nextCoupleId: "",
       gameId: userId,
+      gameSlug: userId,
     });
     hisNameInput.current.value = "";
     herNameInput.current.value = "";
   };
 
-  if (game) {
-    return null;
-  }
   return (
     <div>
       <form>

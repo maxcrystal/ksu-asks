@@ -5,27 +5,29 @@ import SimpleSchema from "simpl-schema";
 const Answers = new Mongo.Collection("answers");
 
 if (Meteor.isServer) {
-  Meteor.publish("answers", () => {
-    return Answers.find();
+  Meteor.publish("answers", gameSlug => {
+    return Answers.find(); // FIXME
   });
 }
 
 Meteor.methods({
-  "answers.insert"({ text, questionId, coupleId, gameId }) {
+  "answers.insert"({ text, questionId, coupleId, gameId, gameSlug }) {
     const schema = new SimpleSchema({
       text: { type: String },
       questionId: { type: String, min: 1 },
       coupleId: { type: String, min: 1 },
       gameId: { type: String, min: 1 },
+      gameSlug: { type: String, min: 1 },
     });
     schema.clean({ text });
-    schema.validate({ text, questionId, coupleId, gameId });
+    schema.validate({ text, questionId, coupleId, gameId, gameSlug });
 
     return Answers.insert({
       text,
       questionId,
       coupleId,
       gameId,
+      gameSlug,
       isAnswered: false,
       votedCouples: [],
       points: [],

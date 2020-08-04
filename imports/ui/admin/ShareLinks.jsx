@@ -4,27 +4,15 @@ import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 
 import { Couples } from "../../api/couples";
-import { Games } from "../../api/games";
 
-const ShareLinks = () => {
-  const { couples, game, userId } = useTracker(() => {
-    const subscriptions = [
-      Meteor.subscribe("couples"),
-      Meteor.subscribe("games"),
-    ];
-    const userId = Meteor.userId();
-    const game = Games.findOne({ isActive: true }) || { _id: userId };
-    const couples = Couples.find({ gameId: game._id }).fetch();
-    return { couples, game, userId };
+const ShareLinks = ({ game }) => {
+  const couples = useTracker(() => {
+    const subscription = Meteor.subscribe("couples", { gameSlug: game.slug });
+    const couples = Couples.find({ gameSlug: game.slug }).fetch();
+    return couples;
   }, []);
 
-  const handleShareLinks = ({ couples, game }) => {
-    if (game._id === userId) {
-      console.log("ADD PROMPT TO START NEW GAME HERE"); // TODO add prompt
-      return;
-    }
-    console.log(couples, game);
-
+  const handleShareLinks = ({ couples }) => {
     const shareLinks = couples.map(
       couple =>
         `${couple.names.he} & ${couple.names.she}: ` +
@@ -38,9 +26,7 @@ const ShareLinks = () => {
 
   return (
     <div>
-      <button onClick={() => handleShareLinks({ couples, game })}>
-        Share Links
-      </button>
+      <button onClick={() => handleShareLinks({ couples })}>Share Links</button>
     </div>
   );
 };

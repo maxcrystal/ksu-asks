@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Meteor } from "meteor/meteor";
 
-import { VotingPage } from "./VotingPage";
+import { Voting } from "./Voting";
 import { Timer } from "./Timer";
 import { timerReasons } from "../../api/timer";
 
-const AnswerPage = ({ question, game, answer, couples }) => {
+const Answer = ({
+  question,
+  game,
+  answer,
+  thisCouple,
+  activeCouple,
+  couples,
+}) => {
   [text, setText] = useState(answer ? answer.text : "");
 
   useEffect(() => {
@@ -85,17 +92,10 @@ const AnswerPage = ({ question, game, answer, couples }) => {
       <i>This text below is visible only to voting couples:</i>
       <pre>{answer ? answer.text : undefined}</pre>
       {answer.isAnswered ? (
-        <VotingPage
-          answer={answer}
-          couples={
-            {
-              _id: "NQ2Tobha2ycSCaXmQ",
-            } /*FIXME couples should be couples prop*/
-          }
-        />
+        <Voting answer={answer} thisCouple={thisCouple} />
       ) : undefined}
     </div>
   );
 };
 
-export { AnswerPage };
+export { Answer };

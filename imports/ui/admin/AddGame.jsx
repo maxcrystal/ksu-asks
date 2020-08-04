@@ -1,17 +1,19 @@
 import React, { useRef } from "react";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
+import { Redirect, useHistory } from "react-router-dom";
 
 import { Couples } from "../../api/couples";
 
-const AddGame = ({ game }) => {
-  const { userId, couples } = useTracker(() => {
-    const subscription = Meteor.subscribe("couples");
+const AddGame = () => {
+  const couples = useTracker(() => {
     const userId = Meteor.userId();
+    const subscription = Meteor.subscribe("couples", { gameSlug: userId });
     const couples = Couples.find({ gameId: userId }).fetch();
-    return { userId, couples };
+    return couples;
   }, []);
   const gameNameInput = useRef();
+  const history = useHistory();
 
   const handleOkClick = e => {
     e.preventDefault();
@@ -21,15 +23,23 @@ const AddGame = ({ game }) => {
       return;
     }
 
-    Meteor.call("games.insert", { name: newGameName }, (error, newGameId) => {
-      console.log("new game id", newGameId);
-      Meteor.call("couples.assignGame", { gameId: newGameId });
-    });
+    Meteor.call(
+      "games.insert",
+      { name: newGameName },
+      (error, { gameId, gameSlug }) => {
+        if (error) {
+          throw new Meteor.Error(error.reason);
+        }
+        console.log("new game id", gameId);
+        Meteor.call("couples.assignGame", { gameId, gameSlug });
+        history.push(`/${gameSlug}`);
+      }
+    );
 
     gameNameInput.current.value = "";
   };
 
-  if (game || couples.length < 2) {
+  if (couples.length < 2) {
     return null;
   }
   return (

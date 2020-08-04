@@ -20,11 +20,11 @@ const Couple = ({ couple }) => {
 };
 
 const CoupleList = () => {
-  const { userId, couples } = useTracker(() => {
-    const subscription = Meteor.subscribe("couples");
+  const couples = useTracker(() => {
     const userId = Meteor.userId();
+    const subscription = Meteor.subscribe("couples", { gameSlug: userId });
     const couples = Couples.find({ gameId: userId }).fetch();
-    return { userId, couples };
+    return couples;
   }, []);
 
   return (
