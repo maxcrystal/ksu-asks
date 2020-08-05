@@ -20,8 +20,11 @@ if (Meteor.isServer) {
     return Games.find({ slug });
   });
 
-  Meteor.publish("admin-games", function () {
-    return Games.find({ admin: this.userId });
+  Meteor.publish("last-games", function () {
+    return Games.find(
+      { creator: this.userId },
+      { sort: { updatedAt: -1 }, limit: 10 }
+    );
   });
 }
 
@@ -50,7 +53,7 @@ Meteor.methods({
       slug,
       isActive: true,
       activeQuestionId: "",
-      admin: Meteor.userId(),
+      creator: Meteor.userId(),
       createdAt: Date.now(),
       updatedAt: Date.now(),
     });

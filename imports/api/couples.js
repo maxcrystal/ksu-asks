@@ -1,5 +1,6 @@
 import { Mongo } from "meteor/mongo";
 import { Meteor } from "meteor/meteor";
+import { Random } from "meteor/random";
 import { slugify } from "transliteration";
 import SimpleSchema from "simpl-schema";
 import uid from "uid";
@@ -9,7 +10,7 @@ const Couples = new Mongo.Collection("couples");
 /**
  * _id,
  * names: object {he: string, she: string},
- * slug: sanitized name to use as parto of the links adddress
+ * slug: sanitized name to use as part of the links adddress
  * gameId: game id
  * gameSlug,
  * isActive,
@@ -57,7 +58,7 @@ Meteor.methods({
       gameId,
       gameSlug,
       isActive: false,
-      nextInCouple: ["he", "she"][Math.floor(Math.random() * 2)],
+      nextInCouple: Random.choice(["he", "she"]),
       nextCoupleId: "",
       createdAt: Date.now(),
       updatedAt: Date.now(),
@@ -93,24 +94,6 @@ Meteor.methods({
         }
       );
     }
-  },
-  "couples.nextCouple"({ couple }) {
-    const { _id, nextInCouple, nextCoupleId } = couple;
-
-    Couples.update(
-      { _id },
-      {
-        $set: {
-          isActive: false,
-          nextInCouple: nextInCouple === "he" ? "she" : "he",
-          updateAt: Date.now(),
-        },
-      }
-    );
-    Couples.update(
-      { _id: nextCoupleId },
-      { $set: { isActive: true, updatedAt: Date.now() } }
-    );
   },
   "couples.remove"({ _id }) {
     if (!Meteor.userId()) {

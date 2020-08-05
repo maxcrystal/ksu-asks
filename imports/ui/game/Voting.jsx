@@ -1,10 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
+import { useParams } from "react-router-dom";
 
-const Voting = ({ answer, thisCouple }) => {
+import { Games } from "../../api/games";
+import { Answers } from "../../api/answers";
+import { Couples } from "../../api/couples";
+
+const Voting = () => {
+  const { gameSlug, coupleSlug } = useParams();
+  const game = useTracker(() => Games.findOne({ slug: gameSlug }), []);
+  const answer = useTracker(
+    () => Answers.findOne({ questionId: game.activeQuestionId }),
+    [game]
+  );
+  const thisCouple = useTracker(
+    () => Couples.findOne({ slug: coupleSlug }),
+    []
+  );
+
   const isVoted = useTracker(() => {
-    const isVoted = answer.votedCouples.includes(thisCouple._id); //FIXME proper use of couple ID through session var
+    const isVoted = answer.votedCouples.includes(thisCouple._id);
     console.log("isVoted", isVoted, answer.votedCouples);
     return isVoted;
   }, [answer.votedCouples.length]);
@@ -14,12 +30,13 @@ const Voting = ({ answer, thisCouple }) => {
       _id: answer._id,
       coupleId: thisCouple._id,
       points,
+      gameSlug,
     });
   };
 
   return (
     <div>
-      <p>VotingPage Content</p>
+      <h3>Voting:</h3>
       <button disabled={isVoted} onClick={() => handleVoteClick(2)}>
         +2
       </button>

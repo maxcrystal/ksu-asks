@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
-import { Redirect, useHistory } from "react-router-dom";
 
 import { Couples } from "../../api/couples";
 
@@ -13,7 +12,6 @@ const AddGame = () => {
     return couples;
   }, []);
   const gameNameInput = useRef();
-  const history = useHistory();
 
   const handleOkClick = e => {
     e.preventDefault();
@@ -32,7 +30,6 @@ const AddGame = () => {
         }
         console.log("new game id", gameId);
         Meteor.call("couples.assignGame", { gameId, gameSlug });
-        history.push(`/${gameSlug}`);
       }
     );
 

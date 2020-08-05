@@ -1,30 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
 import { Meteor } from "meteor/meteor";
+import { useTracker } from "meteor/react-meteor-data";
 
-import { Voting } from "./Voting";
-import { Timer } from "./Timer";
-import { timerReasons } from "../../api/timer";
+import { Answers } from "../../api/answers";
+import { Couples } from "../../api/couples";
+import { Questions } from "../../api/questions";
+import { Games } from "../../api/games";
 
-const Answer = ({
-  question,
-  game,
-  answer,
-  thisCouple,
-  activeCouple,
-  couples,
-}) => {
-  [text, setText] = useState(answer ? answer.text : "");
+const Answer = () => {
+  const textarea = useRef();
+  const { gameSlug, coupleSlug } = useParams();
+
+  const game = useTracker(() => Games.findOne({ slug: gameSlug }));
+
+  const question = useTracker(
+    () => Questions.findOne({ _id: game.activeQuestionId }),
+    []
+  );
+  const answer = useTracker(
+    () => Answers.findOne({ questionId: game.activeQuestionId }),
+    []
+  );
+
+  const thisCouple = useTracker(
+    () => Couples.findOne({ slug: coupleSlug }),
+    []
+  );
+
+  const [text, setText] = useState(answer ? answer.text : "");
 
   useEffect(() => {
-    document.getElementById("answer-text").focus();
+    textarea.current ? textarea.current.focus() : null;
   }, []);
-
-  useEffect(() => {
-    const isVoteFinished = answer.votedCouples.length === couples.length - 1;
-    if (isVoteFinished) {
-      resetActiveQuestion();
-    }
-  }, [answer.votedCouples.length]);
 
   const handleTypingAnswer = e => {
     if (!answer) {
@@ -37,63 +45,36 @@ const Answer = ({
 
   const handleSubmitAnswer = e => {
     e.preventDefault();
-    startVoting();
-  };
-
-  const onTimeEllapsed = reason => {
-    console.log("REASON", reason);
-    switch (reason) {
-      case timerReasons.answering:
-        console.log(timerReasons.answering);
-        startVoting();
-        return;
-      case timerReasons.voting:
-        console.log(timerReasons.voting);
-        resetActiveQuestion();
-        return;
-    }
-  };
-
-  const startVoting = () => {
-    Meteor.call("timer.stop", timerReasons.answeringTimeOut);
     Meteor.call("answers.setAnswered", { _id: answer._id });
-
-    Meteor.call("timer.update", {
-      startDate: Date.now(),
-      isActive: true,
-      maxTime: 15000,
-      reason: timerReasons.voting,
-    });
+    console.log("START VOTING");
   };
 
-  const resetActiveQuestion = () => {
-    Meteor.call("games.resetActiveQuestion", { _id: game._id });
-    console.log("reset active question for game", game);
+  const content = () => {
+    if (thisCouple.isActive) {
+      return (
+        <form>
+          <textarea
+            ref={textarea}
+            id="answer-text"
+            onChange={handleTypingAnswer}
+            value={text}
+            disabled={answer.isAnswered}
+          />
+          <button onClick={handleSubmitAnswer} disabled={answer.isAnswered}>
+            Ок
+          </button>
+        </form>
+      );
+    } else {
+      return <pre>{answer ? answer.text : null}</pre>;
+    }
   };
 
   return (
     <div>
-      <Timer onTimeEllapsed={onTimeEllapsed} />
-      <hr />
+      <h3>Answer:</h3>
       <p>{question.text}</p>
-      <form>
-        <i>Textarea and button are only visible to an answering couple</i>
-        <textarea
-          id="answer-text"
-          onChange={handleTypingAnswer}
-          value={text}
-          disabled={answer.isAnswered}
-        />
-        <button onClick={handleSubmitAnswer} disabled={false}>
-          Ок
-        </button>
-      </form>
-      <hr />
-      <i>This text below is visible only to voting couples:</i>
-      <pre>{answer ? answer.text : undefined}</pre>
-      {answer.isAnswered ? (
-        <Voting answer={answer} thisCouple={thisCouple} />
-      ) : undefined}
+      {content()}
     </div>
   );
 };

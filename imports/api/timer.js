@@ -5,9 +5,7 @@ const Timer = new Mongo.Collection("timer");
 
 const timerReasons = {
   voting: "VOTING",
-  votingTimeOut: "VOTING_TIME_OUT",
   answering: "ANSWERING",
-  answeringTimeOut: "ANSWERING_TIME_OUT",
 };
 
 if (Meteor.isServer) {

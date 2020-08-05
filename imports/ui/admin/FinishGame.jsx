@@ -1,10 +1,13 @@
 import React from "react";
 import { Meteor } from "meteor/meteor";
+import { useHistory } from "react-router-dom";
 
 const FinishGame = ({ game }) => {
+  const history = useHistory();
+
   const handelFinishGameClick = game => {
-    // TODO present and copy results to the clipboard
     Meteor.call("games.finishGame", { _id: game._id });
+    history.push("/"); // TODO present and copy results to the clipboard
   };
 
   return (

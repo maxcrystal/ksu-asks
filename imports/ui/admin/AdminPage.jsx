@@ -1,7 +1,6 @@
 import React from "react";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
-import { Link } from "react-router-dom";
 
 import { Games } from "../../api/games";
 
@@ -19,29 +18,31 @@ const AdminPage = () => {
     return { userId, activeGame };
   }, []);
 
-  if (!userId) {
-    return null;
-  }
-
-  if (activeGame) {
-    return (
-      <div>
-        <p>
-          Game "<Link to={activeGame.slug}>{activeGame.name}</Link>" is in
-          progress.
-        </p>
-        <ShareLinks game={activeGame} />
-        <FinishGame game={activeGame} />
-      </div>
-    );
-  }
+  const content = () => {
+    if (!userId) {
+      return <p>Login or signup to set up a new game.</p>;
+    } else if (activeGame) {
+      return (
+        <div>
+          <ShareLinks game={activeGame} />
+          <FinishGame game={activeGame} />
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <CoupleList />
+          <AddCouple />
+          <AddGame />
+        </div>
+      );
+    }
+  };
 
   return (
     <div>
-      <h3>AdminPage Content (visible to admins only):</h3>
-      <CoupleList />
-      <AddCouple />
-      <AddGame />
+      <h2>AdminPage:</h2>
+      {content()}
     </div>
   );
 };

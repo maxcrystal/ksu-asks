@@ -2,6 +2,9 @@ import { Mongo } from "meteor/mongo";
 import { Meteor } from "meteor/meteor";
 import SimpleSchema from "simpl-schema";
 
+import { Couples } from "./couples";
+import { Games } from "./games";
+
 const Answers = new Mongo.Collection("answers");
 
 if (Meteor.isServer) {
@@ -29,6 +32,7 @@ Meteor.methods({
       gameId,
       gameSlug,
       isAnswered: false,
+      isVoted: false,
       votedCouples: [],
       points: [],
       createdAt: Date.now(),
@@ -38,7 +42,7 @@ Meteor.methods({
   "answers.update"({ _id, text }) {
     const schema = new SimpleSchema({
       _id: { type: String, min: 1 },
-      text: { type: String, min: 1 },
+      text: { type: String },
     });
     schema.clean({ text });
     schema.validate({ _id, text });
@@ -52,18 +56,44 @@ Meteor.methods({
       $set: { isAnswered: true, updatedAt: Date.now() },
     });
   },
-  "answers.vote"({ _id, coupleId, points }) {
+  "answers.vote"({ _id, coupleId, points, gameSlug }) {
     const schema = new SimpleSchema({
       _id: { type: String, min: 1 },
       coupleId: { type: String, min: 1 },
       points: { type: Number, min: 0, max: 2 },
+      gameSlug: { type: String, min: 1 },
     });
     schema.clean({ points });
-    schema.validate({ _id, coupleId, points });
+    schema.validate({ _id, coupleId, points, gameSlug });
 
-    return Answers.update(_id, {
+    const totalCouples = Couples.find({ gameSlug }).count();
+    const votedCouples = Answers.findOne({ _id }).votedCouples.length;
+    const isVoted = votedCouples <= totalCouples - 2;
+
+    if (isVoted) {
+      Games.update({ slug: gameSlug }, { $set: { activeQuestionId: "" } });
+
+      const activeCouple = Couples.findOne({ gameSlug, isActive: true });
+
+      Couples.update(
+        { _id: activeCouple._id },
+        {
+          $set: {
+            isActive: false,
+            nextInCouple: activeCouple.nextInCouple === "he" ? "she" : "he",
+            updateAt: Date.now(),
+          },
+        }
+      );
+      Couples.update(
+        { _id: activeCouple.nextCoupleId },
+        { $set: { isActive: true, updatedAt: Date.now() } }
+      );
+    }
+
+    Answers.update(_id, {
       $push: { votedCouples: coupleId, points },
-      $set: { updatedAt: Date.now() },
+      $set: { isVoted, updatedAt: Date.now() },
     });
   },
 });
