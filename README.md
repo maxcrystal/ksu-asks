@@ -1,4 +1,4 @@
-TODO packages:
+Packages:
 
 https://github.com/sudodoki/copy-to-clipboard#readme - copy to clipboard
 https://github.com/LobsterBandit/use-countdown-timer - countdown timer

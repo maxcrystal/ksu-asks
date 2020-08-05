@@ -8,7 +8,7 @@ const Answers = new Mongo.Collection("answers");
 
 if (Meteor.isServer) {
   Meteor.publish("answers", gameSlug => {
-    return Answers.find(); // FIXME
+    return Answers.find({ gameSlug });
   });
 }
 
