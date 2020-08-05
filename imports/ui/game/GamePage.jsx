@@ -5,6 +5,8 @@ import { useTracker } from "meteor/react-meteor-data";
 import { SelectQuestion } from "./SelectQuestion";
 import { Answer } from "./Answer";
 import { Voting } from "./Voting";
+import { Timer } from "./Timer";
+import { Status } from "./Status";
 
 import { Games } from "../../api/games";
 import { Answers } from "../../api/answers";
@@ -19,14 +21,19 @@ const GamePage = () => {
       Meteor.subscribe("games", { slug: gameSlug }),
       Meteor.subscribe("answers", { gameSlug }),
       Meteor.subscribe("couples", { gameSlug }),
+      Meteor.subscribe("timers", { gameSlug }),
     ];
     return subcriptions.every(s => s.ready());
   }, []);
 
   const game = useTracker(() => Games.findOne({ slug: gameSlug }), [gameSlug]);
   const answer = useTracker(
-    () => Answers.findOne({ questionId: game ? game.activeQuestionId : null }),
-    [game]
+    () =>
+      Answers.findOne({
+        gameSlug,
+        questionId: game ? game.activeQuestionId : null,
+      }),
+    [game, gameSlug]
   );
   const thisCouple = useTracker(() => Couples.findOne({ slug: coupleSlug }), [
     coupleSlug,
@@ -50,6 +57,7 @@ const GamePage = () => {
     } else if (game.activeQuestionId) {
       return (
         <div>
+          <Timer />
           <Answer />
           {showVoting()}
         </div>
@@ -60,6 +68,7 @@ const GamePage = () => {
   return (
     <div>
       <h2>GamePage:</h2>
+      <Status />
       {content()}
     </div>
   );

@@ -3,6 +3,7 @@ import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 
 import { Couples } from "../../api/couples";
+import { copyLinks } from "./ShareLinks";
 
 const AddGame = () => {
   const couples = useTracker(() => {
@@ -30,6 +31,8 @@ const AddGame = () => {
         }
         console.log("new game id", gameId);
         Meteor.call("couples.assignGame", { gameId, gameSlug });
+        Meteor.call("timers.insert", { gameSlug });
+        copyLinks({ gameSlug, couples });
       }
     );
 
@@ -40,11 +43,14 @@ const AddGame = () => {
     return null;
   }
   return (
-    <form>
-      <span>New game: </span>
-      <input type="text" ref={gameNameInput} />
-      <button onClick={handleOkClick}>Ok</button>
-    </form>
+    <div>
+      <h3>AddGame:</h3>
+      <form>
+        <span>Game name: </span>
+        <input type="text" ref={gameNameInput} />
+        <button onClick={handleOkClick}>Ok</button>
+      </form>
+    </div>
   );
 };
 

@@ -1,64 +1,22 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import { Meteor } from "meteor/meteor";
+import React from "react";
+import { useParams } from "react-router-dom";
 import { useTracker } from "meteor/react-meteor-data";
 
-import { Timer as TimerCollection, timerReasons } from "../../api/timer";
+import { Timers } from "../../api/timers";
 
-const Timer = ({ onTimeEllapsed }) => {
-  const [ellapsedTime, setEllapsedTime] = useState(0);
-
-  const { isActive, startDate, maxTime, reason } = useTracker(() => {
-    const subscription = Meteor.subscribe("timer");
-    const isReady = subscription.ready();
-
-    const timer = TimerCollection.findOne();
-    const isActive = isReady ? timer.isActive : false;
-    const startDate = isReady ? timer.startDate : null;
-    const maxTime = isReady ? timer.maxTime : null;
-    const reason = isReady ? timer.reason : "";
-    return { isActive, startDate, maxTime, reason };
-  }, []);
-
-  useEffect(() => {
-    if (isActive) {
-      if (ellapsedTime >= maxTime) {
-        onTimeEllapsed(reason);
-      }
-
-      const update = setTimeout(() => {
-        setEllapsedTime(Date.now() - startDate);
-        console.log("Interval ticks");
-      }, 1000);
-
-      return () => {
-        // console.log("interval cleared");
-        clearTimeout(update);
-      };
-    } else {
-      setEllapsedTime(0);
-    }
-  }, [isActive, ellapsedTime]);
+const Timer = () => {
+  const { gameSlug, coupleSlug } = useParams();
+  const timer = useTracker(() => Timers.findOne({ gameSlug }), [gameSlug]);
 
   return (
     <div>
+      <h3>Timer:</h3>
       <p>
-        Timer is {isActive ? "ON" : "OFF"}, ellapsed time: {ellapsedTime} out of{" "}
-        {maxTime} miliseconds{" "}
-        <i>(timer should be integrated later to check time to answer)</i>.
+        {timer.reason}: Ellapsed {timer.countdown} miliseconds out of{" "}
+        {timer.maxTime}.
       </p>
     </div>
   );
-};
-
-Timer.defaultProps = {
-  onTimeEllapsed: () => {
-    console.log("Time is ellapsed!");
-  },
-};
-
-Timer.protoTypes = {
-  onTimeEllapsed: PropTypes.func.isRequired,
 };
 
 export { Timer };

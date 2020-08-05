@@ -29,6 +29,7 @@ const CoupleList = () => {
 
   return (
     <div>
+      <h3>CoupleList:</h3>
       {couples.map(couple => (
         <Couple key={couple._id} couple={couple} />
       ))}

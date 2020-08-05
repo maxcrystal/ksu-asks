@@ -12,15 +12,15 @@ const Answer = () => {
   const textarea = useRef();
   const { gameSlug, coupleSlug } = useParams();
 
-  const game = useTracker(() => Games.findOne({ slug: gameSlug }));
+  const game = useTracker(() => Games.findOne({ slug: gameSlug }), []);
 
   const question = useTracker(
     () => Questions.findOne({ _id: game.activeQuestionId }),
-    []
+    [game.activeQuestionId]
   );
   const answer = useTracker(
-    () => Answers.findOne({ questionId: game.activeQuestionId }),
-    []
+    () => Answers.findOne({ gameSlug, questionId: game.activeQuestionId }),
+    [gameSlug, game.activeQuestionId]
   );
 
   const thisCouple = useTracker(
@@ -46,6 +46,12 @@ const Answer = () => {
   const handleSubmitAnswer = e => {
     e.preventDefault();
     Meteor.call("answers.setAnswered", { _id: answer._id });
+    Meteor.call("timers.off", { gameSlug });
+    Meteor.call("timers.on", {
+      gameSlug,
+      reason: "VOTING",
+      answerId: answer._id,
+    });
     console.log("START VOTING");
   };
 

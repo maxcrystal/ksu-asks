@@ -2,6 +2,7 @@ import { Mongo } from "meteor/mongo";
 import { Meteor } from "meteor/meteor";
 import { slugify } from "transliteration";
 import SimpleSchema from "simpl-schema";
+import uid from "uid";
 
 const Games = new Mongo.Collection("games");
 

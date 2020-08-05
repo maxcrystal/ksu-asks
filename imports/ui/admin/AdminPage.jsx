@@ -13,7 +13,7 @@ import { FinishGame } from "./FinishGame";
 const AdminPage = () => {
   const { userId, activeGame } = useTracker(() => {
     const userId = Meteor.userId();
-    const subscription = Meteor.subscribe("admin-games");
+    // const subscription = Meteor.subscribe("last-games");
     const activeGame = Games.findOne({ isActive: true });
     return { userId, activeGame };
   }, []);

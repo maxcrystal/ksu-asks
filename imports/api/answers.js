@@ -3,7 +3,6 @@ import { Meteor } from "meteor/meteor";
 import SimpleSchema from "simpl-schema";
 
 import { Couples } from "./couples";
-import { Games } from "./games";
 
 const Answers = new Mongo.Collection("answers");
 
@@ -68,32 +67,24 @@ Meteor.methods({
 
     const totalCouples = Couples.find({ gameSlug }).count();
     const votedCouples = Answers.findOne({ _id }).votedCouples.length;
-    const isVoted = votedCouples <= totalCouples - 2;
+    const isVoted = votedCouples >= totalCouples - 2;
+    console.log("isVoted", totalCouples, votedCouples, isVoted);
 
     if (isVoted) {
-      Games.update({ slug: gameSlug }, { $set: { activeQuestionId: "" } });
-
-      const activeCouple = Couples.findOne({ gameSlug, isActive: true });
-
-      Couples.update(
-        { _id: activeCouple._id },
-        {
-          $set: {
-            isActive: false,
-            nextInCouple: activeCouple.nextInCouple === "he" ? "she" : "he",
-            updateAt: Date.now(),
-          },
-        }
-      );
-      Couples.update(
-        { _id: activeCouple.nextCoupleId },
-        { $set: { isActive: true, updatedAt: Date.now() } }
-      );
+      Meteor.call("timers.off", { gameSlug });
+      Meteor.call("couples.nextCouple", { gameSlug });
     }
 
     Answers.update(_id, {
       $push: { votedCouples: coupleId, points },
       $set: { isVoted, updatedAt: Date.now() },
+    });
+  },
+  "answers.setVoted"({ _id }) {
+    new SimpleSchema({ _id: { type: String, min: 1 } }).validate({ _id });
+
+    return Answers.update(_id, {
+      $set: { isVoted: true, updatedAt: Date.now() },
     });
   },
 });

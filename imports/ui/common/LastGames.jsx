@@ -6,7 +6,11 @@ import { Games } from "../../api/games";
 const LastGames = () => {
   const isReady = useTracker(() => Meteor.subscribe("last-games"), []);
   const games = useTracker(
-    () => Games.find({}, { sort: { isActive: -1, updatedAt: -1 } }).fetch(),
+    () =>
+      Games.find(
+        {},
+        { sort: { isActive: -1, updatedAt: -1 }, limit: 10 }
+      ).fetch(),
     []
   );
 
@@ -30,7 +34,7 @@ const LastGames = () => {
 
   return (
     <div>
-      <h3>Last Games</h3>
+      <h3>Last Games:</h3>
       <p>A list of last 10 games here:</p>
       {renderGamesList()}
     </div>

@@ -8,11 +8,10 @@ import "../imports/api/questions";
 import "../imports/api/answers";
 import "../imports/api/couples";
 import "../imports/api/games";
-import "../imports/api/timer";
+import "../imports/api/timers";
 import "../imports/api/users";
 
 import { Questions } from "../imports/api/questions";
-import { Timer } from "../imports/api/timer";
 
 Meteor.startup(() => {
   // Testing user credentials
@@ -32,10 +31,5 @@ Meteor.startup(() => {
         text: `This is a question text number ${i}. What is your answer?`,
       });
     }
-  }
-
-  if (Timer.find().count() === 0) {
-    console.log("Timer is set");
-    Timer.insert({ startDate: 0, isActive: false });
   }
 });

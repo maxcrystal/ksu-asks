@@ -12,6 +12,7 @@ const FinishGame = ({ game }) => {
 
   return (
     <div>
+      <h3>FinishGame:</h3>
       <button onClick={() => handelFinishGameClick(game)}>Finish Game</button>
     </div>
   );

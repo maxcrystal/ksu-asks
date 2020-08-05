@@ -5,6 +5,8 @@ import { slugify } from "transliteration";
 import SimpleSchema from "simpl-schema";
 import uid from "uid";
 
+import { Games } from "./games";
+
 const Couples = new Mongo.Collection("couples");
 
 /**
@@ -94,6 +96,26 @@ Meteor.methods({
         }
       );
     }
+  },
+  "couples.nextCouple"({ gameSlug }) {
+    Games.update({ slug: gameSlug }, { $set: { activeQuestionId: "" } });
+
+    const activeCouple = Couples.findOne({ gameSlug, isActive: true });
+
+    Couples.update(
+      { _id: activeCouple._id },
+      {
+        $set: {
+          isActive: false,
+          nextInCouple: activeCouple.nextInCouple === "he" ? "she" : "he",
+          updateAt: Date.now(),
+        },
+      }
+    );
+    Couples.update(
+      { _id: activeCouple.nextCoupleId },
+      { $set: { isActive: true, updatedAt: Date.now() } }
+    );
   },
   "couples.remove"({ _id }) {
     if (!Meteor.userId()) {
