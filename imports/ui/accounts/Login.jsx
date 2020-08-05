@@ -47,7 +47,7 @@ const Login = () => {
           name="login-password"
           placeholder="Password"
         />
-        <button>Login</button>
+        <button>Войти</button>
       </form>
     </div>
   );

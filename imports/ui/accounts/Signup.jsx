@@ -52,7 +52,7 @@ const Signup = () => {
           name="signup-password"
           placeholder="Password"
         />
-        <button>Create Account</button>
+        <button>Зарегистрироваться</button>
       </form>
     </div>
   );

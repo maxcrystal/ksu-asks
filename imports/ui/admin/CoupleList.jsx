@@ -12,7 +12,7 @@ const Couple = ({ couple }) => {
   return (
     <div>
       <span>
-        {couple.names.he}-{couple.names.she}
+        {couple.names.he} - {couple.names.she}{" "}
       </span>
       <button onClick={() => handleRemoveCoupleClick(couple._id)}>-</button>
     </div>

@@ -19,9 +19,9 @@ const LastGames = () => {
       return (
         <div key={g._id}>
           <p>
-            <strong>{g.name}</strong>, isActive:{" "}
-            <strong>{g.isActive ? "yes" : "no"}</strong>, creator: {g.creator},
-            updatedAt: {g.updatedAt}
+            <strong>{g.name}</strong>, состояние:{" "}
+            {g.isActive ? "идет" : "завершена"}, организатор: {g.creator},
+            обновлено: {Date(g.updatedAt).toString()}
           </p>
         </div>
       );
@@ -35,7 +35,6 @@ const LastGames = () => {
   return (
     <div>
       <h3>Last Games:</h3>
-      <p>A list of last 10 games here:</p>
       {renderGamesList()}
     </div>
   );

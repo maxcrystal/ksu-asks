@@ -36,10 +36,6 @@ const SelectQuestion = () => {
         return !answeredQuestionsIds.includes(question._id);
       }
     });
-    // const randomQuestionNumber = Math.floor(
-    //   Math.random() * unansweredQuestions.length
-    // );
-    // const randomQuestion = unansweredQuestions[randomQuestionNumber];
     const randomQuestion = Random.choice(unansweredQuestions);
 
     Meteor.call(
@@ -70,14 +66,15 @@ const SelectQuestion = () => {
     if (!game.activeQuestionId && thisCouple.isActive) {
       const [name, whom] =
         thisCouple.nextInCouple === "he"
-          ? [thisCouple.names.he, "him"]
-          : [thisCouple.names.she, "her"];
+          ? [thisCouple.names.he, "ему"]
+          : [thisCouple.names.she, "ей"];
       return (
         <div>
           <p>
-            Next question goes to {name}. Please pass {whom} the phone.
+            На следующий вопрос отвечает {name}. Пожалуйста, передай {whom}{" "}
+            телефон.
           </p>
-          <button onClick={newQuestionClickHandler}>New question</button>
+          <button onClick={newQuestionClickHandler}>Выбрать вопрос</button>
         </div>
       );
     }
@@ -85,9 +82,9 @@ const SelectQuestion = () => {
     if (!game.activeQuestionId && !thisCouple.isActive) {
       const [name, whom] =
         activeCouple.nextInCouple === "he"
-          ? [activeCouple.names.he, "him"]
-          : [activeCouple.names.she, "her"];
-      return <p>Next question goes to {name}</p>;
+          ? [activeCouple.names.he, "ему"]
+          : [activeCouple.names.she, "ей"];
+      return <p>На следующий вопрос отвечает {name}. Готовимся голосовть.</p>;
     }
   };
 

@@ -67,7 +67,7 @@ const Answer = () => {
             disabled={answer.isAnswered}
           />
           <button onClick={handleSubmitAnswer} disabled={answer.isAnswered}>
-            Ок
+            Закончить ответ
           </button>
         </form>
       );

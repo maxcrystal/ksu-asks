@@ -4,7 +4,7 @@ const Rules = () => {
   return (
     <div>
       <h3>Rules:</h3>
-      <p>Rules are here explained.</p>
+      <p>Здесь должно быть описание правил.</p>
     </div>
   );
 };

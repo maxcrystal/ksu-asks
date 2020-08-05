@@ -9,7 +9,7 @@ const Logout = () => {
   if (!userId) {
     return null;
   }
-  return <button onClick={() => Accounts.logout()}>Logout</button>;
+  return <button onClick={() => Accounts.logout()}>Выйти</button>;
 };
 
 export { Logout };

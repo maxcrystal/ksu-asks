@@ -49,9 +49,9 @@ const GamePage = () => {
 
   const content = () => {
     if (!isDataReady) {
-      return <p>Loading...</p>; // FIXME with beautiful loading screen
+      return <p>Загружается...</p>; // FIXME with beautiful loading screen
     } else if (!game || !game.isActive) {
-      return <p>No active games.</p>;
+      return <p>Игр нет.</p>;
     } else if (!game.activeQuestionId) {
       return <SelectQuestion />;
     } else if (game.activeQuestionId) {

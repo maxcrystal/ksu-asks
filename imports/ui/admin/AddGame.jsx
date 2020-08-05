@@ -46,7 +46,7 @@ const AddGame = () => {
     <div>
       <h3>AddGame:</h3>
       <form>
-        <span>Game name: </span>
+        <span>Название игры: </span>
         <input type="text" ref={gameNameInput} />
         <button onClick={handleOkClick}>Ok</button>
       </form>

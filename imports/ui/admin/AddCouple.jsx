@@ -30,8 +30,8 @@ const AddCouple = () => {
     <div>
       <h3>AddCouple:</h3>
       <form>
-        He: <input type="text" ref={hisNameInput} />
-        She: <input type="text" ref={herNameInput} />
+        Он: <input type="text" ref={hisNameInput} />
+        Она: <input type="text" ref={herNameInput} />
         <button onClick={handleAddCoupleClick}>+</button>
       </form>
     </div>

@@ -28,7 +28,7 @@ Meteor.startup(() => {
     console.log("Questions are set");
     for (let i = 0; i < 10; i++) {
       Questions.insert({
-        text: `This is a question text number ${i}. What is your answer?`,
+        text: `Это текст вопроса №${i}. Как будешь отвечать?`,
       });
     }
   }

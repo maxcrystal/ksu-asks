@@ -35,7 +35,7 @@ const ShareLinks = ({ game }) => {
           )
         }
       >
-        Copy links
+        Скопировать приглашение на игру
       </button>
     </div>
   );

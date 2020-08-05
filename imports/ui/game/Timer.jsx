@@ -12,8 +12,7 @@ const Timer = () => {
     <div>
       <h3>Timer:</h3>
       <p>
-        {timer.reason}: Ellapsed {timer.countdown} miliseconds out of{" "}
-        {timer.maxTime}.
+        {timer.reason}: Прошло {timer.countdown} милисекунд из {timer.maxTime}.
       </p>
     </div>
   );

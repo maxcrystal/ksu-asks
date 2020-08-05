@@ -20,7 +20,12 @@ const AdminPage = () => {
 
   const content = () => {
     if (!userId) {
-      return <p>Login or signup to set up a new game.</p>;
+      return (
+        <p>
+          Чтобы организовать игру надо войти или зарегистрироваться, но можно и
+          подождать, когда кто-нибудь пришлет приглашение.
+        </p>
+      );
     } else if (activeGame) {
       return (
         <div>
