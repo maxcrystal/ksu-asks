@@ -65,20 +65,24 @@ Meteor.methods({
     schema.clean({ points });
     schema.validate({ _id, coupleId, points, gameSlug });
 
+    Answers.update(_id, {
+      $push: { votedCouples: coupleId, points },
+      $set: { updatedAt: Date.now() },
+    });
+
+    const thisAnswer = Answers.findOne({ _id });
+
     const totalCouples = Couples.find({ gameSlug }).count();
-    const votedCouples = Answers.findOne({ _id }).votedCouples.length;
-    const isVoted = votedCouples >= totalCouples - 2;
-    console.log("isVoted", totalCouples, votedCouples, isVoted);
+    const votedCouples = thisAnswer.votedCouples.length;
+
+    const isVoted = votedCouples >= totalCouples - 1;
+    console.log("isVoted", totalCouples, votedCouples, isVoted, thisAnswer);
 
     if (isVoted) {
       Meteor.call("timers.off", { gameSlug });
       Meteor.call("couples.nextCouple", { gameSlug });
+      Meteor.call("answers.setVoted", { _id });
     }
-
-    Answers.update(_id, {
-      $push: { votedCouples: coupleId, points },
-      $set: { isVoted, updatedAt: Date.now() },
-    });
   },
   "answers.setVoted"({ _id }) {
     new SimpleSchema({ _id: { type: String, min: 1 } }).validate({ _id });
