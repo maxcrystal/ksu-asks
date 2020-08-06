@@ -8,7 +8,7 @@ const validateNewUser = user => {
   const schema = new SimpleSchema({
     email: {
       type: String,
-      regEx: SimpleSchema.RegEx.Email,
+      regEx: SimpleSchema.RegEx.EmailWithTLD,
     },
   });
   schema.clean({ email });

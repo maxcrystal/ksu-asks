@@ -13,7 +13,7 @@ import { FinishGame } from "./FinishGame";
 const AdminPage = () => {
   const { userId, activeGame } = useTracker(() => {
     const userId = Meteor.userId();
-    // const subscription = Meteor.subscribe("last-games");
+    const subscription = Meteor.subscribe("last-games");
     const activeGame = Games.findOne({ isActive: true });
     return { userId, activeGame };
   }, []);
@@ -22,33 +22,34 @@ const AdminPage = () => {
     if (!userId) {
       return (
         <p>
-          Чтобы организовать игру надо войти или зарегистрироваться, но можно и
-          подождать, когда кто-нибудь пришлет приглашение.
+          Чтобы играть, не нужно регистрироваться, достаточно подождать, когда
+          кто-нибудь пришлет приглашение. Но чтобы организовать новую игру, надо
+          войти или зарегистрироваться.
         </p>
       );
     } else if (activeGame) {
       return (
-        <div>
+        <>
           <ShareLinks game={activeGame} />
           <FinishGame game={activeGame} />
-        </div>
+        </>
       );
     } else {
       return (
-        <div>
-          <CoupleList />
-          <AddCouple />
+        <>
           <AddGame />
-        </div>
+          <AddCouple />
+          <CoupleList />
+        </>
       );
     }
   };
 
   return (
-    <div>
-      <h2>AdminPage:</h2>
+    <>
+      <h3>Администрирование игры</h3>
       {content()}
-    </div>
+    </>
   );
 };
 

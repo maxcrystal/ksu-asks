@@ -2,10 +2,27 @@ import React, { useRef } from "react";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 
+import Button from "@material-ui/core/IconButton";
+import TextField from "@material-ui/core/TextField";
+import AddIcon from "@material-ui/icons/AddCircle";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    marginBottom: theme.spacing(1),
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "baseline",
+    "& > *": { margin: theme.spacing(1), marginLeft: 0 },
+  },
+  input: { flex: 1 },
+}));
+
 const AddCouple = () => {
   const userId = useTracker(() => Meteor.userId(), []);
   const hisNameInput = useRef();
   const herNameInput = useRef();
+  const classes = useStyles();
 
   const handleAddCoupleClick = e => {
     e.preventDefault();
@@ -27,14 +44,28 @@ const AddCouple = () => {
   };
 
   return (
-    <div>
-      <h3>AddCouple:</h3>
-      <form>
-        Он: <input type="text" ref={hisNameInput} />
-        Она: <input type="text" ref={herNameInput} />
-        <button onClick={handleAddCoupleClick}>+</button>
-      </form>
-    </div>
+    <>
+      <div className={classes.root}>
+        <TextField
+          className={classes.input}
+          id="his-name"
+          label="Он"
+          inputProps={{ ref: hisNameInput }}
+          autoComplete="off"
+          helperText="Добавьте пару в игру"
+        />
+        <TextField
+          className={classes.input}
+          id="her-name"
+          label="Она"
+          inputProps={{ ref: herNameInput }}
+          autoComplete="off"
+        />
+        <Button color="primary" onClick={handleAddCoupleClick}>
+          <AddIcon />
+        </Button>
+      </div>
+    </>
   );
 };
 

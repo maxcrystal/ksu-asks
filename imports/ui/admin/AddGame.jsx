@@ -2,8 +2,21 @@ import React, { useRef } from "react";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import { makeStyles } from "@material-ui/core/styles";
+
 import { Couples } from "../../api/couples";
 import { copyLinks } from "./ShareLinks";
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "baseline",
+  },
+  input: { flex: 1, marginRight: theme.spacing(1) },
+}));
 
 const AddGame = () => {
   const couples = useTracker(() => {
@@ -13,6 +26,7 @@ const AddGame = () => {
     return couples;
   }, []);
   const gameNameInput = useRef();
+  const classes = useStyles();
 
   const handleOkClick = e => {
     e.preventDefault();
@@ -43,13 +57,19 @@ const AddGame = () => {
     return null;
   }
   return (
-    <div>
-      <h3>AddGame:</h3>
-      <form>
-        <span>Название игры: </span>
-        <input type="text" ref={gameNameInput} />
-        <button onClick={handleOkClick}>Ok</button>
-      </form>
+    <div className={classes.root}>
+      <TextField
+        className={classes.input}
+        id="game-name"
+        label="Название игры"
+        helperText="Чтобы начать игру, назовите ее и жмите ОК"
+        type="email"
+        inputProps={{ ref: gameNameInput }}
+        autoComplete="off"
+      />
+      <Button variant="contained" color="primary" onClick={handleOkClick}>
+        ОК
+      </Button>
     </div>
   );
 };
