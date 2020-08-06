@@ -2,10 +2,11 @@ import React from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useTracker } from "meteor/react-meteor-data";
 
+import Box from "@material-ui/core/Box";
+
 import { SelectQuestion } from "./SelectQuestion";
 import { Answer } from "./Answer";
 import { Voting } from "./Voting";
-import { Timer } from "./Timer";
 import { Status } from "./Status";
 
 import { Games } from "../../api/games";
@@ -42,7 +43,7 @@ const GamePage = () => {
   const isDataReady = isSubscriptionsReady && game && thisCouple;
 
   const showVoting = () => {
-    if (!thisCouple.isActive && answer.isAnswered) {
+    if (!thisCouple.isActive) {
       return <Voting />;
     }
   };
@@ -56,21 +57,21 @@ const GamePage = () => {
       return <SelectQuestion />;
     } else if (game.activeQuestionId) {
       return (
-        <div>
-          <Timer />
+        <>
           <Answer />
           {showVoting()}
-        </div>
+        </>
       );
     }
   };
 
   return (
-    <div>
-      <h2>GamePage:</h2>
+    <>
+      <Box flex="1" display="flex" flexDirection="column">
+        {content()}
+      </Box>
       <Status />
-      {content()}
-    </div>
+    </>
   );
 };
 

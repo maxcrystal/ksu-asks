@@ -3,16 +3,22 @@ import { useParams } from "react-router-dom";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 
+import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
+import QuestionIcon from "@material-ui/icons/ContactSupport";
+import { palette } from "@material-ui/system";
+
 import { Answers } from "../../api/answers";
 import { Couples } from "../../api/couples";
 import { Questions } from "../../api/questions";
 import { Games } from "../../api/games";
+import { Timer } from "./Timer";
 
 const Answer = () => {
   const textarea = useRef();
   const { gameSlug, coupleSlug } = useParams();
 
-  const game = useTracker(() => Games.findOne({ slug: gameSlug }), []);
+  const game = useTracker(() => Games.findOne({ slug: gameSlug }), [gameSlug]);
 
   const question = useTracker(
     () => Questions.findOne({ _id: game.activeQuestionId }),
@@ -23,10 +29,9 @@ const Answer = () => {
     [gameSlug, game.activeQuestionId]
   );
 
-  const thisCouple = useTracker(
-    () => Couples.findOne({ slug: coupleSlug }),
-    []
-  );
+  const thisCouple = useTracker(() => Couples.findOne({ slug: coupleSlug }), [
+    coupleSlug,
+  ]);
 
   const [text, setText] = useState(answer ? answer.text : "");
 
@@ -55,33 +60,103 @@ const Answer = () => {
     console.log("START VOTING");
   };
 
+  const style = () => {
+    const activeCouple = Couples.findOne({ gameSlug, isActive: true });
+    const name =
+      activeCouple.nextInCouple === "he"
+        ? activeCouple.names.he
+        : activeCouple.names.she;
+    const color =
+      activeCouple.nextInCouple === "he" ? "primary.main" : "secondary.main";
+    return { name, color };
+  };
+
   const content = () => {
     if (thisCouple.isActive) {
       return (
-        <form>
+        <>
           <textarea
             ref={textarea}
             id="answer-text"
             onChange={handleTypingAnswer}
             value={text}
             disabled={answer.isAnswered}
+            placeholder="Ответ..."
+            style={{
+              flex: 1,
+              resize: "none",
+              outline: "none",
+              border: "none",
+              fontSize: "1.2rem",
+              padding: "1rem",
+            }}
           />
-          <button onClick={handleSubmitAnswer} disabled={answer.isAnswered}>
-            Закончить ответ
-          </button>
-        </form>
+          <Timer />
+          <div style={{ alignSelf: "flex-end", marginTop: ".5rem" }}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSubmitAnswer}
+              disabled={answer.isAnswered}
+            >
+              Оветить
+            </Button>
+          </div>
+        </>
       );
     } else {
-      return <pre>{answer ? answer.text : null}</pre>;
+      return (
+        <div
+          style={{
+            flex: 1,
+            fontSize: "1rem",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <span style={{ marginTop: "1rem" }}>
+            Отвечает{" "}
+            <Box component="b" color={style().color}>
+              {style().name}
+            </Box>
+            :
+          </span>
+          <span
+            style={{
+              flex: 1,
+              backgroundColor: "white",
+              borderRadius: "4px",
+              marginTop: ".5rem",
+              padding: "1rem",
+              whiteSpace: "pre-wrap",
+            }}
+          >
+            {answer ? answer.text : null}
+          </span>
+          <Timer />
+        </div>
+      );
     }
   };
 
   return (
-    <div>
-      <h3>Answer:</h3>
-      <p>{question.text}</p>
+    <>
+      <div
+        style={{
+          backgroundColor: "#eee",
+          marginBottom: ".5rem",
+          marginTop: "1rem",
+          padding: "1rem",
+          borderRadius: "4px",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <QuestionIcon color="primary" fontSize="large" />
+        <span style={{ marginLeft: "1rem" }}>{question.text}</span>
+      </div>
       {content()}
-    </div>
+    </>
   );
 };
 

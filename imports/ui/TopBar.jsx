@@ -7,6 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/core/styles";
+import { Timer } from "./game/Timer";
 
 const useStyles = makeStyles(theme => ({
   avatar: { margin: theme.spacing(1) },

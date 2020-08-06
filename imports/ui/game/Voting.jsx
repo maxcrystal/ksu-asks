@@ -3,6 +3,11 @@ import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 import { useParams } from "react-router-dom";
 
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Button from "@material-ui/core/Button";
+import HeartIcon from "@material-ui/icons/Favorite";
+import HeartBorderIcon from "@material-ui/icons/FavoriteBorder";
+
 import { Games } from "../../api/games";
 import { Answers } from "../../api/answers";
 import { Couples } from "../../api/couples";
@@ -35,18 +40,38 @@ const Voting = () => {
   };
 
   return (
-    <div>
-      <h3>Voting:</h3>
-      <button disabled={isVoted} onClick={() => handleVoteClick(2)}>
-        +2
-      </button>
-      <button disabled={isVoted} onClick={() => handleVoteClick(1)}>
-        +1
-      </button>
-      <button disabled={isVoted} onClick={() => handleVoteClick(0)}>
-        0
-      </button>
-    </div>
+    <>
+      <ButtonGroup
+        variant="contained"
+        style={{ display: "flex", marginTop: "1rem" }}
+      >
+        <Button
+          disabled={isVoted}
+          onClick={() => handleVoteClick(2)}
+          style={{ flexGrow: 3 }}
+          color="primary"
+        >
+          <HeartIcon />
+          <HeartIcon />
+        </Button>
+        <Button
+          disabled={isVoted}
+          onClick={() => handleVoteClick(1)}
+          style={{ flexGrow: 4 }}
+          color="primary"
+        >
+          <HeartIcon />
+        </Button>
+        <Button
+          disabled={isVoted}
+          onClick={() => handleVoteClick(0)}
+          style={{ flexGrow: 4 }}
+          color="secondary"
+        >
+          <HeartBorderIcon />
+        </Button>
+      </ButtonGroup>
+    </>
   );
 };
 

@@ -3,6 +3,10 @@ import { useParams } from "react-router-dom";
 import { useTracker } from "meteor/react-meteor-data";
 import { Random } from "meteor/random";
 
+import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
+import { palette } from "@material-ui/system";
+
 import { Games } from "../../api/games";
 import { Couples } from "../../api/couples";
 import { Answers } from "../../api/answers";
@@ -64,36 +68,52 @@ const SelectQuestion = () => {
 
   const content = () => {
     if (!game.activeQuestionId && thisCouple.isActive) {
-      const [name, whom] =
+      const [name, whom, color] =
         thisCouple.nextInCouple === "he"
-          ? [thisCouple.names.he, "ему"]
-          : [thisCouple.names.she, "ей"];
+          ? [thisCouple.names.he, "ему", "primary.main"]
+          : [thisCouple.names.she, "ей", "secondary.main"];
       return (
         <div>
           <p>
-            На следующий вопрос отвечает {name}. Пожалуйста, передай {whom}{" "}
-            телефон.
+            На следующий вопрос отвечает{" "}
+            <Box component="b" color={color}>
+              {name}
+            </Box>
+            . Пожалуйста, передайте {whom} телефон.
           </p>
-          <button onClick={newQuestionClickHandler}>Выбрать вопрос</button>
+          <Box display="flex" justifyContent="center">
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              onClick={newQuestionClickHandler}
+              style={{ marginTop: "1rem" }}
+            >
+              Выбрать вопрос
+            </Button>
+          </Box>
         </div>
       );
     }
 
     if (!game.activeQuestionId && !thisCouple.isActive) {
-      const [name, whom] =
+      const [name, whom, color] =
         activeCouple.nextInCouple === "he"
-          ? [activeCouple.names.he, "ему"]
-          : [activeCouple.names.she, "ей"];
-      return <p>На следующий вопрос отвечает {name}. Готовимся голосовть.</p>;
+          ? [activeCouple.names.he, "ему", "primary.main"]
+          : [activeCouple.names.she, "ей", "secondary.main"];
+      return (
+        <p>
+          На следующий вопрос отвечает{" "}
+          <Box component="b" color={color}>
+            {name}
+          </Box>
+          . Приготовьтесь голосовть.
+        </p>
+      );
     }
   };
 
-  return (
-    <div>
-      <h3>SelectQuestion:</h3>
-      {content()}
-    </div>
-  );
+  return <div style={{ marginTop: "1rem" }}>{content()}</div>;
 };
 
 export { SelectQuestion };

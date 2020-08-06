@@ -36,8 +36,8 @@ if (Meteor.isServer) {
       }).validate({ gameSlug, reason });
 
       const maxTime = {
-        VOTING: 30000,
-        ANSWERING: 30000,
+        VOTING: 300000,
+        ANSWERING: 300000,
       };
 
       const updates = {

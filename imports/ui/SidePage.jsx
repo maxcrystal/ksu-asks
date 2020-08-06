@@ -23,7 +23,14 @@ const SidePage = () => {
       onClose={() => toggleDrawer()}
       onOpen={() => toggleDrawer()}
     >
-      <Container maxWidth="sm">
+      <Container
+        style={{
+          width: "100vw",
+          display: "flex",
+          flexDirection: "column",
+          height: "100%",
+        }}
+      >
         <AdminPage />
         <Divider />
         <AccountPage />
