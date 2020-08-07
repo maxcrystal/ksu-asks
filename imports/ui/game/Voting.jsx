@@ -7,6 +7,7 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import HeartIcon from "@material-ui/icons/Favorite";
 import HeartBorderIcon from "@material-ui/icons/FavoriteBorder";
+import DotIcon from "@material-ui/icons/FiberManualRecord";
 
 import { Games } from "../../api/games";
 import { Answers } from "../../api/answers";
@@ -48,27 +49,26 @@ const Voting = () => {
         <Button
           disabled={isVoted}
           onClick={() => handleVoteClick(2)}
-          style={{ flexGrow: 3 }}
+          style={{ flexGrow: 1 }}
           color="primary"
         >
-          <HeartIcon />
           <HeartIcon />
         </Button>
         <Button
           disabled={isVoted}
           onClick={() => handleVoteClick(1)}
-          style={{ flexGrow: 4 }}
+          style={{ flexGrow: 1 }}
           color="primary"
         >
-          <HeartIcon />
+          <HeartBorderIcon />
         </Button>
         <Button
           disabled={isVoted}
           onClick={() => handleVoteClick(0)}
-          style={{ flexGrow: 4 }}
+          style={{ flexGrow: 1 }}
           color="secondary"
         >
-          <HeartBorderIcon />
+          <DotIcon fontSize="small" />
         </Button>
       </ButtonGroup>
     </>

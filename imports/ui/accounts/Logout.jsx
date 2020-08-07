@@ -4,7 +4,7 @@ import { Accounts } from "meteor/accounts-base";
 import { useTracker } from "meteor/react-meteor-data";
 
 import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
+import ExitIcon from "@material-ui/icons/ExitToApp";
 
 const Logout = () => {
   const userId = useTracker(() => Meteor.userId(), []);
@@ -24,9 +24,10 @@ const Logout = () => {
       <Button
         variant="contained"
         onClick={() => Accounts.logout()}
-        style={{ marginBottom: "2rem" }}
+        style={{ marginBottom: "2rem", marginTop: "1rem" }}
       >
-        Выйти из аккаунта
+        <ExitIcon style={{ marginRight: ".5rem" }} />
+        Выйти
       </Button>
     </div>
   );

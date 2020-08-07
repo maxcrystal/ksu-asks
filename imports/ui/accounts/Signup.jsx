@@ -19,14 +19,6 @@ const useStyles = makeStyles(theme => ({
     },
   },
   login__input: { flex: 1 },
-  login__div: {
-    display: "flex",
-    justifyContent: "center",
-  },
-  login__button: {
-    fontSize: 10,
-    marginTop: theme.spacing(1),
-  },
 }));
 
 const Signup = () => {
@@ -57,7 +49,7 @@ const Signup = () => {
   };
 
   return (
-    <div>
+    <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
       <h3>Регистрация</h3>
       <form
         className={classes.login__form}
@@ -87,9 +79,16 @@ const Signup = () => {
           ОК
         </Button>
       </form>
-      <div className={classes.login__div}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "flex-end",
+          flex: 1,
+        }}
+      >
         <Button
-          className={classes.login__button}
+          style={{ fontSize: "0.7rem", marginBottom: "2rem" }}
           size="small"
           color="primary"
           onClick={() =>

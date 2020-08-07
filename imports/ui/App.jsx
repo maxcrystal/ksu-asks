@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
@@ -27,12 +28,18 @@ const App = () => {
         <Container
           style={{ flex: 1, display: "flex", flexDirection: "column" }}
         >
-          <Route exact path="/">
-            <SetupPage />
-          </Route>
-          <Route exact path="/:gameSlug/:coupleSlug">
-            <GamePage />
-          </Route>
+          <Switch>
+            <Route exact path="/">
+              <SetupPage />
+            </Route>
+
+            <Route exact path="/:gameSlug/:coupleSlug">
+              <GamePage />
+            </Route>
+            <Route>
+              <Redirect to="/" />
+            </Route>
+          </Switch>
         </Container>
       </BrowserRouter>
     </Box>

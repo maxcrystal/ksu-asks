@@ -4,7 +4,6 @@ import { useTracker } from "meteor/react-meteor-data";
 
 import Drawer from "@material-ui/core/SwipeableDrawer";
 import Container from "@material-ui/core/Container";
-import Divider from "@material-ui/core/Divider";
 
 import { AdminPage } from "./admin/AdminPage";
 import { AccountPage } from "./accounts/AccountPage";
@@ -32,7 +31,6 @@ const SidePage = () => {
         }}
       >
         <AdminPage />
-        <Divider />
         <AccountPage />
       </Container>
     </Drawer>

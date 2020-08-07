@@ -54,7 +54,13 @@ const CoupleList = () => {
   }, []);
 
   return (
-    <div>
+    <div
+      style={{
+        flexGrow: 4,
+        WebkitOverflowScrolling: "touch",
+        overflowY: "scroll",
+      }}
+    >
       {couples.map(couple => (
         <Couple key={couple._id} couple={couple} />
       ))}

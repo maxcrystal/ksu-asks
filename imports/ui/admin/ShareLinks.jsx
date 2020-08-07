@@ -3,6 +3,9 @@ import copy from "copy-to-clipboard";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 
+import Button from "@material-ui/core/Button";
+import CopyIcon from "@material-ui/icons/FileCopyOutlined";
+
 import { Couples } from "../../api/couples";
 
 const copyLinks = ({ gameSlug, couples }) => {
@@ -22,9 +25,11 @@ const ShareLinks = ({ game }) => {
     return Meteor.subscribe("couples", { gameSlug: game.slug });
   });
   return (
-    <div>
-      <h3>ShareLinks:</h3>
-      <button
+    <div style={{ display: "flex", marginTop: "1rem" }}>
+      <Button
+        variant="contained"
+        color="primary"
+        style={{ flexGrow: 1 }}
         onClick={() =>
           copyLinks(
             {
@@ -35,8 +40,9 @@ const ShareLinks = ({ game }) => {
           )
         }
       >
-        Скопировать приглашение на игру
-      </button>
+        <CopyIcon style={{ marginRight: ".5rem" }} />
+        Скопировать приглашение
+      </Button>
     </div>
   );
 };

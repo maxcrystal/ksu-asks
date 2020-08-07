@@ -1,8 +1,10 @@
 import React from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useTracker } from "meteor/react-meteor-data";
 
 import Box from "@material-ui/core/Box";
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { SelectQuestion } from "./SelectQuestion";
 import { Answer } from "./Answer";
@@ -42,6 +44,10 @@ const GamePage = () => {
 
   const isDataReady = isSubscriptionsReady && game && thisCouple;
 
+  const notResponding = () => {
+    return <></>;
+  };
+
   const showVoting = () => {
     if (!thisCouple.isActive) {
       return <Voting />;
@@ -50,7 +56,11 @@ const GamePage = () => {
 
   const content = () => {
     if (!isDataReady) {
-      return <p>Загружается...</p>; // FIXME with beautiful loading screen
+      return (
+        <Backdrop open={true} style={{ color: "#ddd" }}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      );
     } else if (!game || !game.isActive) {
       return <p>Игр нет.</p>;
     } else if (!game.activeQuestionId) {

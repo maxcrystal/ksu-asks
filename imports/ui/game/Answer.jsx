@@ -5,6 +5,7 @@ import { useTracker } from "meteor/react-meteor-data";
 
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
+import Paper from "@material-ui/core/Paper";
 import QuestionIcon from "@material-ui/icons/ContactSupport";
 import { palette } from "@material-ui/system";
 
@@ -141,20 +142,19 @@ const Answer = () => {
 
   return (
     <>
-      <div
+      <Paper
         style={{
           backgroundColor: "#eee",
           marginBottom: ".5rem",
           marginTop: "1rem",
           padding: "1rem",
-          borderRadius: "4px",
           display: "flex",
           alignItems: "center",
         }}
       >
         <QuestionIcon color="primary" fontSize="large" />
         <span style={{ marginLeft: "1rem" }}>{question.text}</span>
-      </div>
+      </Paper>
       {content()}
     </>
   );
