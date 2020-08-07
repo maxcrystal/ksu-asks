@@ -76,7 +76,6 @@ Meteor.methods({
     const votedCouples = thisAnswer.votedCouples.length;
 
     const isVoted = votedCouples >= totalCouples - 1;
-    console.log("isVoted", totalCouples, votedCouples, isVoted, thisAnswer);
 
     if (isVoted) {
       Meteor.call("timers.off", { gameSlug });

@@ -27,7 +27,6 @@ const Voting = () => {
 
   const isVoted = useTracker(() => {
     const isVoted = answer.votedCouples.includes(thisCouple._id);
-    console.log("isVoted", isVoted, answer.votedCouples);
     return isVoted;
   }, [answer.votedCouples.length]);
 

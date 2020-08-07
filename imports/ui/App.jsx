@@ -9,6 +9,7 @@ import { GamePage } from "./game/GamePage";
 import { SetupPage } from "./common/SetupPage";
 import { TopBar } from "./TopBar";
 import { SidePage } from "./SidePage";
+import { Alert } from "./Alert";
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
       <BrowserRouter>
         <TopBar />
         <SidePage />
+        <Alert />
         <Container
           style={{ flex: 1, display: "flex", flexDirection: "column" }}
         >

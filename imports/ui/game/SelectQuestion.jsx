@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useTracker } from "meteor/react-meteor-data";
 import { Random } from "meteor/random";
 
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import { palette } from "@material-ui/system";
 
 import { Games } from "../../api/games";
@@ -14,6 +19,7 @@ import { Questions } from "../../api/questions";
 
 const SelectQuestion = () => {
   const { gameSlug, coupleSlug } = useParams();
+  const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
   const thisCouple = useTracker(() => Couples.findOne({ slug: coupleSlug }), [
     coupleSlug,
@@ -30,7 +36,7 @@ const SelectQuestion = () => {
 
     const answeredQuestionsIds = answers.map(answer => answer.questionId);
     if (answeredQuestionsIds.length === questions.length) {
-      console.log("ALL QUESTIONS ANSWERED"); // TODO create a proper logic to handle this
+      setDialogIsOpen(true); // TODO create a proper logic to handle this (no more questions)
       return;
     }
     const unansweredQuestions = questions.filter(question => {
@@ -62,8 +68,6 @@ const SelectQuestion = () => {
       _id: game._id,
       activeQuestionId: randomQuestion._id,
     });
-
-    console.log("activeQuestionId", randomQuestion._id, game.activeQuestionId);
   };
 
   const content = () => {
@@ -113,7 +117,35 @@ const SelectQuestion = () => {
     }
   };
 
-  return <div style={{ marginTop: "1rem" }}>{content()}</div>;
+  return (
+    <div style={{ marginTop: "1rem" }}>
+      {content()}
+      <Dialog
+        open={dialogIsOpen}
+        onClose={() => setDialogIsOpen(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Вопросов нет"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Все вопросы закончились :). Если вы доиграли до этого момента, то
+            вам, наверное, было очень весело. Чтобы продолжить веселье,
+            организатору надо закончить эту игру и начать все по новой.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => setDialogIsOpen(false)}
+            color="primary"
+            autoFocus
+          >
+            ОК
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
 };
 
 export { SelectQuestion };

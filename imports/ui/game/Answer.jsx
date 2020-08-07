@@ -58,7 +58,6 @@ const Answer = () => {
       reason: "VOTING",
       answerId: answer._id,
     });
-    console.log("START VOTING");
   };
 
   const style = () => {

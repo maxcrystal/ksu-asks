@@ -72,7 +72,6 @@ if (Meteor.isServer) {
           } else if (reason === "VOTING") {
             Meteor.call("answers.setVoted", { _id: answerId });
             Meteor.call("couples.nextCouple", { gameSlug });
-            console.log("answer is voted logic here");
           }
         }
       };

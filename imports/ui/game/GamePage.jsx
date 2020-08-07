@@ -44,10 +44,6 @@ const GamePage = () => {
 
   const isDataReady = isSubscriptionsReady && game && thisCouple;
 
-  const notResponding = () => {
-    return <></>;
-  };
-
   const showVoting = () => {
     if (!thisCouple.isActive) {
       return <Voting />;

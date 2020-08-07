@@ -43,7 +43,6 @@ const AddGame = () => {
         if (error) {
           throw new Meteor.Error(error.reason);
         }
-        console.log("new game id", gameId);
         Meteor.call("couples.assignGame", { gameId, gameSlug });
         Meteor.call("timers.insert", { gameSlug });
         copyLinks({ gameSlug, couples });
