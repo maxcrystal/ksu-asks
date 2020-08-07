@@ -57,8 +57,12 @@ const GamePage = () => {
           <CircularProgress color="inherit" />
         </Backdrop>
       );
-    } else if (!game || !game.isActive) {
-      return <p>Игр нет.</p>;
+    } else if (!game.isActive) {
+      return (
+        <p style={{ marginTop: "2rem" }}>
+          Эта игра закончилась, результаты внизу.
+        </p>
+      );
     } else if (!game.activeQuestionId) {
       return <SelectQuestion />;
     } else if (game.activeQuestionId) {

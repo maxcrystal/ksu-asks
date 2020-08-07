@@ -26,7 +26,7 @@ const copyLinks = ({ gameSlug, couples }) => {
 
   copy(text, {
     debug: false,
-    message: "Press #{key} to copy",
+    message: "#{key} чтобы скопировать",
   });
 
   Session.set("isSnackbarOpen", true);

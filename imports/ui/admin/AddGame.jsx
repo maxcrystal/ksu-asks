@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
+import { Session } from "meteor/session";
 
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -46,6 +47,7 @@ const AddGame = () => {
         Meteor.call("couples.assignGame", { gameId, gameSlug });
         Meteor.call("timers.insert", { gameSlug });
         copyLinks({ gameSlug, couples });
+        Session.set("isSidePageOpen", false);
       }
     );
 

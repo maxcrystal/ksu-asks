@@ -11,7 +11,7 @@ const Alert = () => {
 
   return (
     <Snackbar
-      style={{ zIndex: 5000 }} // FIXME Alert doen't show up
+      style={{ zIndex: 9000 }}
       anchorOrigin={{
         vertical: "bottom",
         horizontal: "center",
@@ -19,7 +19,7 @@ const Alert = () => {
       open={isOpen}
       autoHideDuration={4000}
       onClose={() => Session.set("isSnackbarOpen", false)}
-      message="Ссылки для игры скопированы в буфер обмена"
+      message="Ссылки для игры скопированы"
       action={
         <IconButton
           size="small"
