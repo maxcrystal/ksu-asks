@@ -25,11 +25,13 @@ Meteor.startup(() => {
 
   // If the Questions collection is empty, add some data.
   if (Questions.find().count() === 0) {
-    console.log("Questions are set");
-    for (let i = 0; i < 10; i++) {
-      Questions.insert({
-        text: `Это текст вопроса №${i}. Как будешь отвечать?`,
-      });
-    }
+    Assets.getText("questions.txt", (error, questions) => {
+      questions.split("\n").forEach(q =>
+        Questions.insert({
+          text: q,
+        })
+      );
+      console.log("Questions are set");
+    });
   }
 });

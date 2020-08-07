@@ -111,7 +111,7 @@ const SelectQuestion = () => {
           <Box component="b" color={color}>
             {name}
           </Box>
-          . Приготовьтесь голосовть.
+          . Приготовьтесь голосовать.
         </p>
       );
     }
