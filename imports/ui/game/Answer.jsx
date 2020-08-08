@@ -99,7 +99,7 @@ const Answer = () => {
               onClick={handleSubmitAnswer}
               disabled={answer.isAnswered}
             >
-              Оветить
+              Ответить
             </Button>
           </div>
         </>

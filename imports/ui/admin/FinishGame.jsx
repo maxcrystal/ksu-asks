@@ -10,7 +10,7 @@ const FinishGame = ({ game }) => {
 
   const handelFinishGameClick = game => {
     Meteor.call("games.finishGame", { _id: game._id });
-    history.push("/"); // TODO present and copy results to the clipboard
+    // history.push("/"); // TODO present and copy results to the clipboard
   };
 
   return (

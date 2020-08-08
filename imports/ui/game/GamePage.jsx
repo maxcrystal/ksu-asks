@@ -60,7 +60,7 @@ const GamePage = () => {
     } else if (!game.isActive) {
       return (
         <p style={{ marginTop: "2rem" }}>
-          Эта игра закончилась, результаты внизу.
+          Игра "{game.name}" закончена, результаты внизу.
         </p>
       );
     } else if (!game.activeQuestionId) {

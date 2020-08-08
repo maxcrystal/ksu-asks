@@ -47,7 +47,7 @@ const AddGame = () => {
         Meteor.call("couples.assignGame", { gameId, gameSlug });
         Meteor.call("timers.insert", { gameSlug });
         copyLinks({ gameSlug, couples });
-        Session.set("isSidePageOpen", false);
+        // Session.set("isSidePageOpen", false); FIXME copyLinks doesn't work
       }
     );
 
