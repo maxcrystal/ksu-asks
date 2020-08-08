@@ -1,5 +1,8 @@
 import React from "react";
+import { Meteor } from "meteor/meteor";
+import { useTracker } from "meteor/react-meteor-data";
 import { Session } from "meteor/session";
+
 import AppBar from "@material-ui/core/AppBar";
 import ToolBar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -7,7 +10,6 @@ import IconButton from "@material-ui/core/IconButton";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/core/styles";
-import { Timer } from "./game/Timer";
 
 const useStyles = makeStyles(theme => ({
   avatar: { margin: theme.spacing(1) },
@@ -16,6 +18,12 @@ const useStyles = makeStyles(theme => ({
 
 const TopBar = () => {
   const classes = useStyles();
+
+  const serverStatus = useTracker(() => Meteor.status(), []);
+  if (serverStatus.staus === "offline") {
+    console.log("Client is onffine, reconnecting...");
+    Meteor.reconnect();
+  }
 
   const handleClick = () =>
     Session.set("isSidePageOpen", !Session.get("isSidePageOpen"));
