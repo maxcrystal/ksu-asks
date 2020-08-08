@@ -100,7 +100,7 @@ const SelectQuestion = () => {
       );
     }
 
-    if (!game.activeQuestionId && !thisCouple.isActive) {
+    if (!game.activeQuestionId && !thisCouple.isActive && activeCouple) {
       const [name, whom, color] =
         activeCouple.nextInCouple === "he"
           ? [activeCouple.names.he, "ему", "primary.main"]

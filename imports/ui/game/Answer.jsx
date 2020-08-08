@@ -80,7 +80,7 @@ const Answer = () => {
             id="answer-text"
             onChange={handleTypingAnswer}
             value={text}
-            disabled={answer.isAnswered}
+            disabled={answer ? answer.isAnswered : true}
             placeholder="Ответ..."
             style={{
               flex: 1,
@@ -97,7 +97,7 @@ const Answer = () => {
               variant="contained"
               color="primary"
               onClick={handleSubmitAnswer}
-              disabled={answer.isAnswered}
+              disabled={answer ? answer.isAnswered : true}
             >
               Ответить
             </Button>
@@ -152,7 +152,9 @@ const Answer = () => {
         }}
       >
         <QuestionIcon color="primary" fontSize="large" />
-        <span style={{ marginLeft: "1rem" }}>{question.text}</span>
+        <span style={{ marginLeft: "1rem" }}>
+          {question ? question.text : null}
+        </span>
       </Paper>
       {content()}
     </>
