@@ -7,6 +7,7 @@ import HeartBorderIcon from "@material-ui/icons/FavoriteBorder";
 import DotIcon from "@material-ui/icons/FiberManualRecord";
 import GroupIcon from "@material-ui/icons/Group";
 import CopyrightIcon from "@material-ui/icons/Copyright";
+import Divider from "@material-ui/core/Divider";
 
 const Rules = () => {
   return (
@@ -82,18 +83,22 @@ const Rules = () => {
         Очки за голосование по одному вопросу усредняются, если кто-то не успел
         проголосовать, то это считается голосованием с 0 очками.
       </p>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-end",
-        }}
-      >
-        <CopyrightIcon
-          style={{ color: "grey", marginRight: ".3rem", fontSize: ".8rem" }}
-        />
-        <div style={{ color: "grey", fontSize: ".8rem" }}>
-          М.Хрусталев, 2020
+      <div>
+        <Divider variant="middle" style={{ marginTop: "2rem" }} />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: "1rem",
+          }}
+        >
+          <CopyrightIcon
+            style={{ color: "grey", marginRight: ".3rem", fontSize: ".8rem" }}
+          />
+          <div style={{ color: "grey", fontSize: ".8rem" }}>
+            М.Хрусталев, 2020
+          </div>
         </div>
       </div>
     </div>
