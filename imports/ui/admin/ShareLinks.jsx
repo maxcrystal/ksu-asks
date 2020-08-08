@@ -26,9 +26,11 @@ const copyLinks = ({ gameSlug, couples }) => {
 
   copy(text, {
     debug: false,
-    message: "#{key} чтобы скопировать",
+    format: "text/plain",
+    message: "Выделите и скопируйте текст приглашения",
   });
 
+  Session.set("isSidePageOpen", false);
   Session.set("isSnackbarOpen", true);
 };
 

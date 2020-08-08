@@ -10,6 +10,7 @@ const FinishGame = ({ game }) => {
 
   const handelFinishGameClick = game => {
     Meteor.call("games.finishGame", { _id: game._id });
+    Session.set("isSidePageOpen", false);
     // history.push("/"); // TODO present and copy results to the clipboard
   };
 

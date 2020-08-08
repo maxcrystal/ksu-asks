@@ -9,6 +9,11 @@ import ExitIcon from "@material-ui/icons/ExitToApp";
 const Logout = () => {
   const userId = useTracker(() => Meteor.userId(), []);
 
+  const handleLogout = () => {
+    Accounts.logout();
+    Session.set("isSidePageOpen", false);
+  };
+
   if (!userId) {
     return null;
   }
@@ -23,11 +28,11 @@ const Logout = () => {
     >
       <Button
         variant="contained"
-        onClick={() => Accounts.logout()}
+        onClick={handleLogout}
         style={{ marginBottom: "2rem", marginTop: "1rem" }}
       >
         <ExitIcon style={{ marginRight: ".5rem" }} />
-        Выйти
+        Выйти из аккаунта
       </Button>
     </div>
   );
