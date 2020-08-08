@@ -62,6 +62,9 @@ const Answer = () => {
 
   const style = () => {
     const activeCouple = Couples.findOne({ gameSlug, isActive: true });
+    if (!activeCouple) {
+      return { name: "", color: "primary.main" };
+    }
     const name =
       activeCouple.nextInCouple === "he"
         ? activeCouple.names.he

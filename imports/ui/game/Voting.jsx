@@ -26,9 +26,16 @@ const Voting = () => {
   );
 
   const isVoted = useTracker(() => {
-    const isVoted = answer.votedCouples.includes(thisCouple._id);
+    const isVoted = answer
+      ? answer.votedCouples.includes(thisCouple._id)
+      : false;
     return isVoted;
-  }, [answer.votedCouples.length]);
+  }, [answer]);
+
+  const isAnswered = useTracker(() => {
+    const isAnswered = answer ? answer.isAnswered : false;
+    return isAnswered;
+  }, [answer]);
 
   const handleVoteClick = points => {
     Meteor.call("answers.vote", {
@@ -46,7 +53,7 @@ const Voting = () => {
         style={{ display: "flex", marginTop: "1rem" }}
       >
         <Button
-          disabled={isVoted}
+          disabled={isVoted || !isAnswered}
           onClick={() => handleVoteClick(2)}
           style={{ flexGrow: 1 }}
           color="primary"
@@ -54,7 +61,7 @@ const Voting = () => {
           <HeartIcon />
         </Button>
         <Button
-          disabled={isVoted}
+          disabled={isVoted || !isAnswered}
           onClick={() => handleVoteClick(1)}
           style={{ flexGrow: 1 }}
           color="primary"
@@ -62,7 +69,7 @@ const Voting = () => {
           <HeartBorderIcon />
         </Button>
         <Button
-          disabled={isVoted}
+          disabled={isVoted || !isAnswered}
           onClick={() => handleVoteClick(0)}
           style={{ flexGrow: 1 }}
           color="secondary"

@@ -42,6 +42,7 @@ const TopBar = () => {
         />
         <Typography className={classes.title} variant="h6" noWrap>
           Ксюша спрашивает...
+          <sup>{"   "}β</sup>
         </Typography>
         <IconButton
           aria-label="меню"
