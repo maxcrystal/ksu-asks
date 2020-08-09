@@ -27,7 +27,7 @@ const SidePage = () => {
     >
       <Container
         style={{
-          width: "100vw",
+          width: "90vw",
           display: "flex",
           flexDirection: "column",
           height: "100%",

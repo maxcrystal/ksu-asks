@@ -4,26 +4,11 @@ import { Session } from "meteor/session";
 
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
-
-const useStyles = makeStyles(theme => ({
-  login__form: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "baseline",
-    "& > *": {
-      margin: theme.spacing(1),
-      marginLeft: 0,
-    },
-  },
-  login__input: { flex: 1 },
-}));
 
 const Login = () => {
   const [error, setError] = useState("");
   const emailInput = useRef();
   const passwordInput = useRef();
-  const classes = useStyles();
 
   const onSubmit = e => {
     e.preventDefault();
@@ -46,13 +31,16 @@ const Login = () => {
     <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
       <h3>Вход</h3>
       <form
-        className={classes.login__form}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "stretch",
+        }}
         onSubmit={onSubmit}
         noValidate
         autoComplete="off"
       >
         <TextField
-          className={classes.login__input}
           error={!!error}
           id="login-email"
           label="Email"
@@ -61,7 +49,7 @@ const Login = () => {
           inputProps={{ ref: emailInput }}
         />
         <TextField
-          className={classes.login__input}
+          style={{ marginTop: "1rem" }}
           error={false}
           id="login-password"
           label="Пароль"
@@ -69,7 +57,12 @@ const Login = () => {
           helperText={""}
           inputProps={{ ref: passwordInput }}
         />
-        <Button type="submit" variant="contained" color="primary">
+        <Button
+          style={{ marginTop: "2rem" }}
+          type="submit"
+          variant="contained"
+          color="primary"
+        >
           ОК
         </Button>
       </form>
