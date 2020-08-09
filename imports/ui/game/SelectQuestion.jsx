@@ -16,6 +16,7 @@ import { Games } from "../../api/games";
 import { Couples } from "../../api/couples";
 import { Answers } from "../../api/answers";
 import { Questions } from "../../api/questions";
+import { RandomDoodle } from "./RandomDoodle";
 
 const SelectQuestion = () => {
   const { gameSlug, coupleSlug } = useParams();
@@ -96,6 +97,9 @@ const SelectQuestion = () => {
               Выбрать вопрос
             </Button>
           </Box>
+          <div style={{ marginTop: "2rem" }}>
+            <RandomDoodle />
+          </div>
         </div>
       );
     }
@@ -106,13 +110,18 @@ const SelectQuestion = () => {
           ? [activeCouple.names.he, "ему", "primary.main"]
           : [activeCouple.names.she, "ей", "secondary.main"];
       return (
-        <p>
-          На следующий вопрос отвечает{" "}
-          <Box component="b" color={color}>
-            {name}
-          </Box>
-          . Приготовьтесь голосовать.
-        </p>
+        <>
+          <p>
+            На следующий вопрос отвечает{" "}
+            <Box component="b" color={color}>
+              {name}
+            </Box>
+            . Приготовьтесь голосовать.
+          </p>
+          <div style={{ marginTop: "2rem" }}>
+            <RandomDoodle />
+          </div>
+        </>
       );
     }
   };

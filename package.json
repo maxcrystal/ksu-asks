@@ -17,6 +17,7 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-flip-move": "^3.0.4",
+    "react-open-doodles": "^1.0.5",
     "react-router-dom": "^5.2.0",
     "simpl-schema": "^1.9.0",
     "transliteration": "^2.1.11",

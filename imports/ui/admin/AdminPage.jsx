@@ -1,4 +1,5 @@
 import React from "react";
+import { Route } from "react-router-dom";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 
@@ -19,7 +20,7 @@ const AdminPage = () => {
     return { userId, activeGame };
   }, []);
 
-  const content = () => {
+  const content = pinCode => {
     if (!userId) {
       return (
         <>
@@ -28,12 +29,13 @@ const AdminPage = () => {
             кто-нибудь пришлет приглашение. Но чтобы организовать новую игру,
             надо войти или зарегистрироваться.
           </p>
-          <PinCode />
+          {pinCode}
         </>
       );
     } else if (activeGame) {
       return (
         <>
+          {pinCode}
           <ShareLinks game={activeGame} />
           <FinishGame game={activeGame} />
         </>
@@ -56,7 +58,11 @@ const AdminPage = () => {
   return (
     <>
       <h3>Администрирование игры</h3>
-      {content()}
+      {content(
+        <Route exact path="/">
+          <PinCode />
+        </Route>
+      )}
     </>
   );
 };
