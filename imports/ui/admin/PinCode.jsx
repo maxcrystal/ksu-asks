@@ -16,7 +16,7 @@ const PinCode = () => {
   const handleClick = () => {
     setError("");
 
-    const pinCode = pinCodeInput.current.value.trim();
+    const pinCode = pinCodeInput.current.value.trim().toLowerCase();
 
     Meteor.subscribe(
       "couples-invitation",
