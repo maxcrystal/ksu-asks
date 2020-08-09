@@ -10,6 +10,7 @@ import { AccountPage } from "./accounts/AccountPage";
 
 const SidePage = () => {
   const isSidePageOpen = useTracker(() => Session.get("isSidePageOpen"), []);
+  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
   const toggleDrawer = () => {
     Session.set("isSidePageOpen", !isSidePageOpen);
@@ -17,6 +18,8 @@ const SidePage = () => {
 
   return (
     <Drawer
+      disableBackdropTransition={!iOS}
+      disableDiscovery={iOS}
       anchor="right"
       open={isSidePageOpen}
       onClose={() => toggleDrawer()}
