@@ -9,6 +9,7 @@ import { AddCouple } from "./AddCouple";
 import { CoupleList } from "./CoupleList";
 import { ShareLinks } from "./ShareLinks";
 import { FinishGame } from "./FinishGame";
+import { PinCode } from "./PinCode";
 
 const AdminPage = () => {
   const { userId, activeGame } = useTracker(() => {
@@ -21,11 +22,14 @@ const AdminPage = () => {
   const content = () => {
     if (!userId) {
       return (
-        <p>
-          Чтобы играть, не нужно регистрироваться, достаточно подождать, когда
-          кто-нибудь пришлет приглашение. Но чтобы организовать новую игру, надо
-          войти или зарегистрироваться.
-        </p>
+        <>
+          <p>
+            Чтобы играть, не нужно регистрироваться, достаточно подождать, когда
+            кто-нибудь пришлет приглашение. Но чтобы организовать новую игру,
+            надо войти или зарегистрироваться.
+          </p>
+          <PinCode />
+        </>
       );
     } else if (activeGame) {
       return (

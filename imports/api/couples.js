@@ -20,13 +20,18 @@ const Couples = new Mongo.Collection("couples");
  * nextCoupleId
  * createdAT
  * updatedAT
+ * pinCode
  */
 
 if (Meteor.isServer) {
   Couples.createIndex({ gameId: 1, slug: 1 }, { unique: true });
+  Couples.createIndex({ pinCode: 1 }, { unique: true });
 
   Meteor.publish("couples", ({ gameSlug }) => {
     return Couples.find({ gameSlug });
+  });
+  Meteor.publish("couples-invitation", ({ pinCode }) => {
+    return Couples.find({ pinCode });
   });
 }
 
@@ -54,11 +59,17 @@ Meteor.methods({
       i++;
     }
 
+    let pinCode = uid(4);
+    while (Couples.find({ pinCode }).count() !== 0) {
+      pinCode += uid(1);
+    }
+
     return Couples.insert({
       names,
       slug,
       gameId,
       gameSlug,
+      pinCode,
       isActive: false,
       nextInCouple: Random.choice(["he", "she"]),
       nextCoupleId: "",

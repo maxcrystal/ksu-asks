@@ -19,7 +19,7 @@ const Alert = () => {
       open={isOpen}
       autoHideDuration={4000}
       onClose={() => Session.set("isSnackbarOpen", false)}
-      message="Ссылки для игры скопированы"
+      message="Приглашение скопировано"
       action={
         <IconButton
           size="small"

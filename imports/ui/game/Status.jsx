@@ -26,6 +26,10 @@ const Status = () => {
     gameSlug,
   ]);
 
+  if (!game || !couples) {
+    return null;
+  }
+
   const makeLedder = () => {
     const votingCouples = couples.length - 1;
     const calculatePoints = coupleId => {

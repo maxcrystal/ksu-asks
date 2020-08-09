@@ -11,17 +11,22 @@ import { Couples } from "../../api/couples";
 
 const copyLinks = ({ gameSlug, couples }) => {
   const shareLinks = couples.map(
-    couple =>
-      `${couple.names.he} и ${couple.names.she}: ` +
-      `${Meteor.absoluteUrl(`/${gameSlug}/${couple.slug}`, {
-        secure: true,
-        replaceLocalhost: true,
-      })}`
+    couple => `${couple.names.he} и ${couple.names.she} – ${couple.pinCode}`
+    // couple =>
+    //   `${couple.names.he} и ${couple.names.she}: ` +
+    //   `${Meteor.absoluteUrl(`/${gameSlug}/${couple.slug}`, {
+    //     secure: true,
+    //     replaceLocalhost: true,
+    //   })}`
   );
 
+  const path = Meteor.absoluteUrl("/", {
+    secure: true,
+    replaceLocalhost: true,
+  });
   const text =
-    "Ксюша спрашивает...\n\nДля того, чтобы начать " +
-    "игру, пройдите по ссылке для вашей пары:\n\n" +
+    `Для того, чтобы начать игру, пройдите по ссылке ${path} ` +
+    `и введите код приглашения вашей пары:\n\n` +
     shareLinks.sort().join("\n");
 
   copy(text, {

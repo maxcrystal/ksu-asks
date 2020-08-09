@@ -46,7 +46,7 @@ const AddGame = () => {
         }
         Meteor.call("couples.assignGame", { gameId, gameSlug });
         Meteor.call("timers.insert", { gameSlug });
-        copyLinks({ gameSlug, couples });
+        // copyLinks({ gameSlug, couples }); FIXME doesn't work from here on mobile devices
       }
     );
 
