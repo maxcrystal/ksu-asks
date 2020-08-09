@@ -10,6 +10,7 @@ import { SelectQuestion } from "./SelectQuestion";
 import { Answer } from "./Answer";
 import { Voting } from "./Voting";
 import { Status } from "./Status";
+import { RandomDoodle } from "./RandomDoodle";
 
 import { Games } from "../../api/games";
 import { Answers } from "../../api/answers";
@@ -59,9 +60,14 @@ const GamePage = () => {
       );
     } else if (!game.isActive) {
       return (
-        <p style={{ marginTop: "2rem" }}>
-          Игра "{game.name}" закончена, результаты внизу.
-        </p>
+        <>
+          <p style={{ marginTop: "2rem" }}>
+            Игра "{game.name}" закончена, результаты внизу.
+          </p>
+          <div style={{ marginTop: "2rem" }}>
+            <RandomDoodle />
+          </div>
+        </>
       );
     } else if (!game.activeQuestionId) {
       return <SelectQuestion />;
