@@ -15,8 +15,6 @@ const Rules = () => {
       style={{
         flexGrow: 4,
         heght: "100%",
-        WebkitOverflowScrolling: "touch",
-        overflowY: "scroll",
       }}
     >
       <h3>Развлекательная семейная терапия для пар и больших компаний</h3>
@@ -96,7 +94,7 @@ const Rules = () => {
           <CopyrightIcon
             style={{ color: "grey", marginRight: ".3rem", fontSize: ".8rem" }}
           />
-          <div style={{ color: "grey", fontSize: ".8rem" }}>
+          <div style={{ color: "grey", fontSize: ".6rem" }}>
             М.Хрусталев, 2020
           </div>
         </div>

@@ -28,7 +28,14 @@ const App = () => {
         <SidePage />
         <Alert />
         <Container
-          style={{ flex: 1, display: "flex", flexDirection: "column" }}
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            height: "100%",
+            overflowY: "scroll",
+            WebkitOverflowScrolling: "touch",
+          }}
         >
           <Switch>
             <Route exact path="/">

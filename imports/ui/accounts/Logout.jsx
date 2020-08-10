@@ -20,16 +20,15 @@ const Logout = () => {
   return (
     <div
       style={{
-        flex: 1,
         display: "flex",
-        alignItems: "flex-end",
-        justifyContent: "center",
+        flexDirection: "column",
+        alignItems: "center",
       }}
     >
       <Button
         variant="contained"
         onClick={handleLogout}
-        style={{ marginBottom: "2rem", marginTop: "1rem" }}
+        style={{ marginBottom: "1rem", marginTop: "2rem" }}
       >
         <ExitIcon style={{ marginRight: ".5rem" }} />
         Выйти из аккаунта

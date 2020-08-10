@@ -52,7 +52,7 @@ const AddCouple = () => {
           label="Он"
           inputProps={{ ref: hisNameInput }}
           autoComplete="off"
-          helperText="Добавьте пару в игру"
+          helperText="Добавьте пару"
         />
         <TextField
           className={classes.input}
