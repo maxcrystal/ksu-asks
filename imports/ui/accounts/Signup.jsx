@@ -106,7 +106,7 @@ const Signup = () => {
             Session.set("isLoginVisible", !Session.get("isLoginVisible"))
           }
         >
-          Я уже зарегестрирован
+          Я уже зарегистрирован
         </Button>
       </div>
     </div>

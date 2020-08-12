@@ -82,7 +82,7 @@ const Login = () => {
             Session.set("isLoginVisible", !Session.get("isLoginVisible"))
           }
         >
-          Я еще не зарегестрирован
+          Я еще не зарегистрирован
         </Button>
       </div>
     </div>
