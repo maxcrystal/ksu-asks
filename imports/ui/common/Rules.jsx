@@ -89,6 +89,7 @@ const Rules = () => {
             alignItems: "center",
             justifyContent: "center",
             marginTop: "1rem",
+            marginBottom: "1rem",
           }}
         >
           <CopyrightIcon

@@ -99,7 +99,11 @@ const Signup = () => {
         }}
       >
         <Button
-          style={{ fontSize: "0.7rem", marginBottom: "2rem" }}
+          style={{
+            fontSize: "0.7rem",
+            marginBottom: "2rem",
+            marginTop: "0.5rem",
+          }}
           size="small"
           color="primary"
           onClick={() =>
