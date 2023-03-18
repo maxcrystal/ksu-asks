@@ -10,6 +10,7 @@ import CopyrightIcon from "@material-ui/icons/Copyright";
 import Divider from "@material-ui/core/Divider";
 
 const Rules = () => {
+  const currentYear = new Date().getFullYear();
   return (
     <div
       style={{
@@ -96,7 +97,7 @@ const Rules = () => {
             style={{ color: "grey", marginRight: ".3rem", fontSize: ".8rem" }}
           />
           <div style={{ color: "grey", fontSize: ".6rem" }}>
-            М.Хрусталев, 2020
+            М.Хрусталев, 2020 - {currentYear}
           </div>
         </div>
       </div>
