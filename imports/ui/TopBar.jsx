@@ -22,7 +22,7 @@ const TopBar = () => {
   const history = useHistory();
 
   const serverStatus = useTracker(() => Meteor.status(), []);
-  if (serverStatus.staus === "offline") {
+  if (serverStatus.status === "offline") {
     console.log("Client is onffine, reconnecting...");
     Meteor.reconnect(); // TODO review how it works
   }
