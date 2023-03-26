@@ -62,7 +62,7 @@ const AddGame = () => {
         className={classes.input}
         id="game-name"
         label="Название игры"
-        helperText="Чтобы начать игру, назовите ее и жмите ОК"
+        helperText="Дайте игре название, чтобы начать"
         type="email"
         inputProps={{ ref: gameNameInput }}
         autoComplete="off"
