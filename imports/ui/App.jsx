@@ -41,7 +41,6 @@ const App = () => {
             <Route exact path="/">
               <SetupPage />
             </Route>
-
             <Route exact path="/:gameSlug/:coupleSlug">
               <GamePage />
             </Route>

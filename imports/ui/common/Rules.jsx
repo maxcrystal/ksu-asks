@@ -18,39 +18,68 @@ const Rules = () => {
         heght: "100%",
       }}
     >
-      <h3>Развлекательная семейная терапия для пар и больших компаний</h3>
-      <Paper style={{ display: "flex", padding: ".5rem" }}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            marginTop: ".5rem",
-            marginRight: ".3rem",
-          }}
-        >
-          <Avatar
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <h3>Развлекательная семейная терапия для пар и больших компаний</h3>
+        <div style={{ display: "flex", padding: ".5rem" }}>
+          <div
             style={{
-              height: "2rem",
-              width: "2rem",
-              backgroundColor: "grey",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              marginTop: ".5rem",
+              marginRight: ".5rem",
             }}
           >
-            <GroupIcon />
-          </Avatar>
-          <div style={{ fontSize: ".7rem", color: "grey" }}>2+ пары</div>
+            <Avatar
+              style={{
+                height: "2rem",
+                width: "2rem",
+                backgroundColor: "grey",
+              }}
+            >
+              <GroupIcon />
+            </Avatar>
+            <div
+              style={{
+                fontSize: ".5rem",
+                color: "grey",
+                textAlign: "center",
+                marginTop: ".2rem",
+              }}
+            >
+              2+ пары
+            </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              marginTop: ".5rem",
+            }}
+          >
+            <Avatar
+              style={{
+                height: "2rem",
+                width: "2rem",
+                backgroundColor: "grey",
+              }}
+            >
+              18+
+            </Avatar>
+            <div
+              style={{
+                fontSize: ".5rem",
+                color: "grey",
+                textAlign: "center",
+                marginTop: ".2rem",
+              }}
+            >
+              18+ лет
+            </div>
+          </div>
         </div>
-        <Avatar
-          style={{
-            height: "2rem",
-            width: "2rem",
-            backgroundColor: "grey",
-            marginTop: ".5rem",
-          }}
-        >
-          18+
-        </Avatar>
-      </Paper>
+      </div>
       <h4>Цель игры</h4>
       <p>
         Пара, в которой партнеры знают друг друга лучше, выигрывает. Очки
