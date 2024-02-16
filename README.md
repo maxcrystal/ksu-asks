@@ -1,3 +1,5 @@
+App works at https://ksu.eu.meteorapp.com/
+
 Packages:
 
 https://github.com/sudodoki/copy-to-clipboard#readme - copy to clipboard
