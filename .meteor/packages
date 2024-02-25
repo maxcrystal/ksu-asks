@@ -21,3 +21,4 @@ react-meteor-data       # React higher-order component for reactively tracking M
 accounts-base@2.2.10
 accounts-password@2.4.0
 session@1.2.1
+montiapm:agent
