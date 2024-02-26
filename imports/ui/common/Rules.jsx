@@ -8,9 +8,15 @@ import DotIcon from "@material-ui/icons/FiberManualRecord";
 import GroupIcon from "@material-ui/icons/Group";
 import CopyrightIcon from "@material-ui/icons/Copyright";
 import Divider from "@material-ui/core/Divider";
+import Button from "@material-ui/core/Button";
 
 const Rules = () => {
   const currentYear = new Date().getFullYear();
+
+  const handleButtonClick = () => {
+    window.open("https://semipyadnaya.ru/ksuasks", "_blank");
+  };
+
   return (
     <div
       style={{
@@ -92,6 +98,9 @@ const Rules = () => {
         затем второй должен в течение второй минуты ответить устно на тот же
         вопрос. Остальные пары должны в это время оценить ответ голосованием.
       </p>
+      <Button color="primary" variant="outlined" onClick={handleButtonClick}>
+        Подробные правила игры
+      </Button>
       <h4>Как считаются очки?</h4>
       <div>
         <div style={{ display: "flex", alignItems: "center" }}>
