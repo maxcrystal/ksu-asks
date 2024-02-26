@@ -1,8 +1,8 @@
-## Ksu Asks...
+# Ksu Asks...
 
 App works at https://ksuasks.ru/
 
-## Packages used
+## Some packages and info used
 
 - https://github.com/sudodoki/copy-to-clipboard#readme - copy to clipboard
 - https://github.com/Detaysoft/react-chat-elements - chat elements
